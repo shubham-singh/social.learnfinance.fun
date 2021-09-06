@@ -7,8 +7,10 @@ interface Props {
 }
 
 const PrivateRoute = ({ path, ...props }: Props) => {
+  
   const { id } = useParams();
   const { loggedIn } = useAppSelector((state) => state.auth);
+  console.log("prive route loaded again", loggedIn);
   return loggedIn ? (
     <Route {...props} path={path} />
   ) : (

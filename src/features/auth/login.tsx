@@ -56,7 +56,7 @@ const Login = () => {
       if (state !== null) {
         navigate(state.from);
       } else {
-        navigate("/");
+        navigate("/home");
       }
     }
   });

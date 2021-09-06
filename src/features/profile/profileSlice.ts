@@ -2,23 +2,38 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createProfileAsync, getProfileAsync } from "../../utils/server.requests";
 
 export interface ProfileState {
-    newUser: Boolean,
+    newUser: boolean,
     profile: {
         img: {
-            profile: String,
-            cover: String
+            profile: string,
+            cover: string
         },
-        _id: String,
-        user_id: String,
-        username: String,
-        name: String,
-        bio: String,
+        _id: string,
+        user_id: string,
+        username: string,
+        name: string,
+        bio: string,
         following: [],
         followers: []
     }
 }
 
-const initialState = {} as ProfileState
+const initialState = {
+    newUser: false,
+    profile: {
+        img: {
+            profile: "",
+            cover: ""
+        },
+        _id: "",
+        user_id: "",
+        username: "",
+        name: "",
+        bio: "",
+        following: [],
+        followers: []
+    }
+} as ProfileState
 
 export const profileSlice = createSlice({
     name: "profile",
@@ -32,7 +47,11 @@ export const profileSlice = createSlice({
             })
             .addCase(getProfileAsync.fulfilled, (state, action) => {
                 state.newUser = action.payload.newUser;
-                state.profile = action.payload.profile;
+                if (action.payload.profile) {
+                    state.profile = action.payload.profile;
+                } else {
+                    state.profile = initialState.profile;
+                }
             })
     }
 })
