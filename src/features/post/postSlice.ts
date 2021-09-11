@@ -72,21 +72,21 @@ const postSlice = createSlice({
           posts: state.posts.concat(action.payload.posts.posts),
         };
       })
-      .addCase(reactPostAsync.fulfilled, (state, action) => {
-        const existingPost = state.posts.findIndex(
-          (post) => post._id === action.payload.post._id
-        );
-        if (
-          state.posts[existingPost].likes.includes(action.payload.profileID)
-        ) {
-          const newLikes = state.posts[existingPost].likes.filter(
-            (id) => id !== action.payload.profileID
-          );
-          state.posts[existingPost].likes = newLikes;
-        } else {
-          state.posts[existingPost].likes.push(action.payload.profileID);
-        }
-      });
+      // .addCase(reactPostAsync.fulfilled, (state, action) => {
+      //   const existingPost = state.posts.findIndex(
+      //     (post) => post._id === action.payload.post._id
+      //   );
+      //   if (
+      //     state.posts[existingPost].likes.includes(action.payload.profileID)
+      //   ) {
+      //     const newLikes = state.posts[existingPost].likes.filter(
+      //       (id) => id !== action.payload.profileID
+      //     );
+      //     state.posts[existingPost].likes = newLikes;
+      //   } else {
+      //     state.posts[existingPost].likes.push(action.payload.profileID);
+      //   }
+      // });
     // builder.addCase(getAllPostAsync.fulfilled, (state, action) => {
     //     console.log(action.payload.posts.posts);
     //   state.posts.concat(action.payload.posts.posts);

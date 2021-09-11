@@ -81,6 +81,9 @@ export const getNotificationAsync = createAsyncThunk(
   async (_, {rejectWithValue}) => {
     try {
       const response = await axios.get(NOTIFICATION);
+      if (response.data.success) {
+        return response.data
+      }
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
