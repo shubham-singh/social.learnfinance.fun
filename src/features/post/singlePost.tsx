@@ -1,40 +1,59 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getPostAsync } from "../../utils/server.requests";
+import { PostState, reactPostAsync, UserState } from "./postSlice";
 import Loader from "../loader/loader";
-import { PostState, UserState } from "./postSlice";
+import { format, parseJSON } from "date-fns";
+import { isLiked } from "../../utils/function";
+import UserLayout from "./userLayout";
+import ActionLayout from "./actionLayout";
 
 const SinglePost = () => {
-    
-    const { username, postID } = useParams();  
-    const profileID = useAppSelector(state => state.profile.profile._id)
-    const [post, setPost] = useState<PostState | null>(null);
-    
-    function isLiked (likeArr: UserState[], userID: string) {
-        return likeArr.some(user => user._id === userID)
-    }
-    
-    useEffect(() => {
-        getPostAsync({postID, username}, setPost);
-    }, [])
+  const { username, postID } = useParams();
+  const dispatch = useAppDispatch();
+  const profileID = useAppSelector((state) => state.profile.profile._id);
+  const profile = useAppSelector((state) => state.profile);
+  const [post, setPost] = useState<PostState | null>(null);
 
-    if (post !== null) {
-        return (
-            <div>
-                <div>
-                    <img src={post.author.img.profile}/>
-                    <div>
-                        <h1>{post.author.name}</h1>
-                        <h3>@{post.author.username}</h3>
-                    </div>
-                </div>
-                <p>{post.body}</p>
-                <p>{post.likes.length}{isLiked(post.likes, profileID) ? "Unlike" : "Like"}</p>
-            </div>
-        );
-    }
-    return <Loader />
-}
+  const isPostLiked = post !== null ? isLiked(post.likes, profileID, true) : false;
+
+  const likeUnlike = () => {
+      if (post !== null) {
+          dispatch(reactPostAsync(post._id));
+          if (isPostLiked) {
+              setPost({
+                  ...post,
+                  likes: post.likes.filter(user => user._id !== profileID)
+              })
+          } else {
+              setPost({
+                  ...post,
+                  likes: [profile.profile, ...post.likes]
+              })
+          }
+      }
+  }
+
+  useEffect(() => {
+    getPostAsync({ postID, username }, setPost);
+  }, []);
+
+  if (post !== null) {
+    return (
+        <div className="flex flex-col m-3">
+            <UserLayout image={post.author.img.profile} name={post.author.name} username={post.author.username} />
+        <p className="text-xl mt-4 mb-4">{post.body}</p>
+        <p className="text-gray-600">
+            {format(parseJSON(post.createdAt), 'PPpp')}
+        </p>
+        <div className="flex flex-row justify-evenly items-center border-t border-b p-2">
+          <ActionLayout isPostLiked={isPostLiked} likeUnlike={likeUnlike} numberOfLikes={post.likes.length} />
+        </div>
+      </div>
+    );
+  }
+  return <Loader />;
+};
 
 export default SinglePost;

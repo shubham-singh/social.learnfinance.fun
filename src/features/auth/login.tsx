@@ -62,6 +62,54 @@ const Login = () => {
   });
 
   return (
+    // <div className="flex flex-col justify-center">
+    //   <form className="" onSubmit={handleLogin}>
+    //     <h1
+    //       className=""
+    //       onClick={() => navigate("/")}
+    //     >
+    //       {/* {lang[language].learnFinance} */}
+    //       Learn Finance
+    //     </h1>
+    //     <input
+    //       className=""
+    //       type="email"
+    //       //   placeholder={lang[language].email}
+    //       placeholder="Email"
+    //       name="email"
+    //       value={loginInfo.email}
+    //       onChange={onChangeHandler}
+    //       required
+    //     />
+    //     <input
+    //       className=""
+    //       type="password"
+    //       //   placeholder={lang[language].password}
+    //       placeholder="Password"
+    //       name="password"
+    //       value={loginInfo.password}
+    //       onChange={onChangeHandler}
+    //       required
+    //     />
+    //     <button className="" type="submit">
+    //       {/* {lang[language].login} */}
+    //       Login
+    //     </button>
+    //     <button
+    //       className=""
+    //       onClick={handleGuestLogin}
+    //     >
+    //       {/* {lang[language].loginAsGuest} */}
+    //       Login with Guest account
+    //     </button>
+    //   </form>
+    //   <p className="" onClick={() => navigate("/signup")}>
+    //     {/* {lang[language].signupText} */}
+    //     Don't have an account? Signup now!
+    //   </p>
+    // </div>
+
+
     <div className="flex-column-center form-container">
       <form className="flex-c form-credentials shadow" onSubmit={handleLogin}>
         <h1

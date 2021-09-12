@@ -1,4 +1,6 @@
 import axios from "axios";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { PostState } from "../features/post/postSlice";
 
 export const scrollToTop = () => {
   window.scroll({
@@ -21,3 +23,19 @@ export const deleteAuthToken = () => {
     window.location.reload();
   }, 0)
 };
+
+export const isLiked = (likeArr: string[] | any[], userID: string, DetailedLikeArray: boolean = false) => {
+  if (DetailedLikeArray) {
+    return likeArr.some(user => user._id === userID);
+  } return likeArr.some(id => id === userID);
+}
+
+export const timeAgo = (timestamp: string) => {
+  let timeAgo = "";
+  if (timestamp) {
+    const date = parseISO(timestamp);
+    const timePeriod = formatDistanceToNow(date);
+    timeAgo = `${timePeriod} ago`
+  }
+  return timeAgo;
+}

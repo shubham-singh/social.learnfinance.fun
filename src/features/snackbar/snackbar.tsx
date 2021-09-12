@@ -20,7 +20,7 @@ const Snackbar = () => {
   return (
     <>
       {visible && (
-        <div className="snackbar">
+        <div className="snackbar text-center">
           <p>{message}</p>
         </div>
       )}

@@ -1,6 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap");
 
 .App {
-  text-align: center;
+  font-family: sans-serif;
+  min-height: 100vh;
+  margin: 0;
 }
 
+.heading {
+  font-family: "Dancing Script", cursive;
+  text-align: center;
+  font-size: 2rem;
+}
+
+@media screen and (min-width: 769px) {
+  .form-credentials {
+    width: 28vw;
+  }
+}

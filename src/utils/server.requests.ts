@@ -132,7 +132,6 @@ export const createProfileAsync = createAsyncThunk(
   }
 );
 
-// export const createPostAsync = async (post: string) => {
 export const createPostAsync = createAsyncThunk(
   "post/create",
   async (post: string, { dispatch, rejectWithValue }) => {

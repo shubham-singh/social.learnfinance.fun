@@ -8,12 +8,12 @@ import PrivateRoute from './features/auth/privateRoute';
 import ProfileSetup from "./features/profile/profileSetup";
 import SinglePost from "./features/post/singlePost";
 import { setupAuthHeaderForServiceCalls } from './utils/function';
-// import { getAllPostAsync, getProfileAsync } from './utils/server.requests';
 import { getFeedAsync, getNotificationAsync, getProfileAsync } from './utils/server.requests';
 import Signup from './features/auth/signup';
 import Snackbar from './features/snackbar/snackbar';
 import { getAllPostAsync } from './features/post/postSlice';
 import TimeAgo from './features/post/timeAgo';
+import ComposePost from './features/post/composePost';
 
 function App() {
 
@@ -47,6 +47,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <PrivateRoute path="/home" element={<Home />} />
+        <PrivateRoute path="/compose" element={<ComposePost />} />
         <PrivateRoute path="/profile/create" element={<ProfileSetup />} />
         <Route path="/:username/:postID" element={<SinglePost />} />
         <Route path="/login" element={<Login />} />
