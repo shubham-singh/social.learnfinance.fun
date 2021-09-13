@@ -30,6 +30,10 @@ export const isLiked = (likeArr: string[] | any[], userID: string, DetailedLikeA
   } return likeArr.some(id => id === userID);
 }
 
+export const isFollowing = (following: string[], profileID: string) => {
+  return following.some(userID => userID === profileID);
+}
+
 export const timeAgo = (timestamp: string) => {
   let timeAgo = "";
   if (timestamp) {

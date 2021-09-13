@@ -7,16 +7,19 @@ import { PostState, reactPostAsync } from "./postSlice";
 import UserLayout from "./userLayout";
 
 const PostList = ({ posts }: { posts: PostState[] }) => {
-  const profileID = useAppSelector((state) => state.profile.profile._id);
+  // const profileID = useAppSelector((state) => state.profile.profile._id);
+  const profileID = useAppSelector((state) => state.auth.profile.profile._id);
   const dispatch = useDispatch();
-  console.log(posts);
+
   if (!posts) {
     return null;
   }
+
   const sortedPosts = posts
     .slice()
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-  return (
+  
+    return (
     <div>
       {sortedPosts?.map((post) => {
         const isPostLiked = isLiked(post.likes, profileID);

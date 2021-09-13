@@ -7,7 +7,7 @@ import { ReactComponent as BackIcon } from "../../assets/icons/BackIcon.svg";
 
 const ComposePost = () => {
   const [post, setPost] = useState("");
-  const image = useAppSelector((state) => state.profile.profile.img.profile);
+  const image = useAppSelector((state) => state.auth.profile.profile.img.profile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const ComposePost = () => {
 
   return (
     <div className="flex flex-col m-2 p-4 h-screen">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <BackIcon onClick={() => navigate("/home")} />
         <button
           className="inline-block px-6 py-2 rounded-xl text-white bg-gray-600"

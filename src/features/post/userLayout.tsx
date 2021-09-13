@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const UserLayout = ({
   image,
   name,
@@ -9,10 +11,12 @@ const UserLayout = ({
 }) => {
   return (
     <div className="flex flex-row items-center">
-      <img
-        className="w-12 h-12 bg-gray-600 rounded-full border-none"
-        src={image}
-      />
+      <Link to={`/${username}`}>
+        <img
+          className="w-12 h-12 bg-gray-600 rounded-full border-none"
+          src={image}
+        />
+      </Link>
       <div className="ml-4">
         <h1 className="truncate ...">
           {name}

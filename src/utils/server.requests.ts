@@ -1,9 +1,18 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { showSnackbar } from "../features/snackbar/snackbarSlice";
-import { CHECK_USERNAME, FEED, LOGIN, NOTIFICATION, POST, PROFILE, SIGNUP } from "./api.routes";
+import {
+  CHECK_USERNAME,
+  FEED,
+  LOGIN,
+  NOTIFICATION,
+  POST,
+  PROFILE,
+  SIGNUP,
+} from "./api.routes";
 import { ProfileFormState } from "../features/profile/profileSetup";
 import { addPost, PostState } from "../features/post/postSlice";
+import { follow, unfollow } from "../features/profile/profileSlice";
 import { deleteAuthToken } from "./function";
 import { NavigateFunction } from "react-router-dom";
 
@@ -63,7 +72,7 @@ export const getProfileAsync = createAsyncThunk(
 
 export const getFeedAsync = createAsyncThunk(
   "feed/getFeed",
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(FEED);
       console.log(response.data);
@@ -74,21 +83,21 @@ export const getFeedAsync = createAsyncThunk(
       return rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 export const getNotificationAsync = createAsyncThunk(
   "notification/getNotification",
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(NOTIFICATION);
       if (response.data.success) {
-        return response.data
+        return response.data;
       }
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 // export const getAllPostAsync = createAsyncThunk(
 //   "post/getAllPost",
@@ -136,7 +145,7 @@ export const createPostAsync = createAsyncThunk(
   "post/create",
   async (post: string, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.post(POST, {body: post});
+      const response = await axios.post(POST, { body: post });
       if (response.data.success) {
         dispatch(addPost(response.data));
         return response.data;
@@ -149,7 +158,7 @@ export const createPostAsync = createAsyncThunk(
 
 export const likePostAsync = createAsyncThunk(
   "post/like",
-  async (postID: string, {dispatch, rejectWithValue}) => {
+  async (postID: string, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.post(`${POST}/${postID}`, postID);
       if (response.data.success) {
@@ -159,16 +168,63 @@ export const likePostAsync = createAsyncThunk(
       return rejectWithValue(error.response.data);
     }
   }
-)
+);
 
-export const getPostAsync = async ({postID, username}:{postID: string, username: string}, setPost: React.Dispatch<React.SetStateAction<PostState | null>>) => {
+export const getPostAsync = async (
+  { postID, username }: { postID: string; username: string },
+  setPost: React.Dispatch<React.SetStateAction<PostState | null>>
+) => {
   try {
     const response = await axios.get(`${POST}/${username}/${postID}`);
     if (response.data.success) {
-
       setPost(response.data.post);
     }
   } catch (error: any) {
     setPost(error.message);
   }
-}
+};
+
+export const getProfileByUsernameAsync = createAsyncThunk(
+  "profile/getProfileByUsername",
+  async (username: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${PROFILE}/${username}`);
+      if (response.data.success) {
+        return response.data;
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+export const followAsync = createAsyncThunk(
+  "auth/profile/follow",
+  async ({profileID, userID} : {profileID: string, userID: string}, {dispatch, rejectWithValue}) => {
+    try {
+      const response = await axios.post(`${PROFILE}/follow`, {profileID});
+      if (response.data.success) {
+        dispatch(follow(userID))
+        return response.data;
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+  )
+  
+  export const unfollowAsync = createAsyncThunk(
+    "auth/profile/unfollow",
+    async ({profileID, userID} : {profileID: string, userID: string}, { dispatch, rejectWithValue }) => {
+      try {
+        const response = await axios.post(`${PROFILE}/unfollow`, {profileID});
+        if (response.data.success) {
+          dispatch(unfollow(userID))
+          return response.data;
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getPostAsync } from "../../utils/server.requests";
 import { PostState, reactPostAsync, UserState } from "./postSlice";
@@ -8,12 +8,16 @@ import { format, parseJSON } from "date-fns";
 import { isLiked } from "../../utils/function";
 import UserLayout from "./userLayout";
 import ActionLayout from "./actionLayout";
+import { ReactComponent as BackIcon } from "../../assets/icons/BackIcon.svg";
 
 const SinglePost = () => {
   const { username, postID } = useParams();
   const dispatch = useAppDispatch();
-  const profileID = useAppSelector((state) => state.profile.profile._id);
-  const profile = useAppSelector((state) => state.profile);
+  const navigate = useNavigate();
+  // const profileID = useAppSelector((state) => state.profile.profile._id);
+  const profileID = useAppSelector((state) => state.auth.profile.profile._id);
+  // const profile = useAppSelector((state) => state.profile);
+  const profile = useAppSelector((state) => state.auth.profile);
   const [post, setPost] = useState<PostState | null>(null);
 
   const isPostLiked = post !== null ? isLiked(post.likes, profileID, true) : false;
@@ -42,6 +46,10 @@ const SinglePost = () => {
   if (post !== null) {
     return (
         <div className="flex flex-col m-3">
+          <div className="mb-3 flex border-b items-center">
+            <BackIcon className="my-2 mr-7" onClick={() => navigate(-1)} />
+            <h1 className="text-lg font-bold">Post</h1>
+          </div>
             <UserLayout image={post.author.img.profile} name={post.author.name} username={post.author.username} />
         <p className="text-xl mt-4 mb-4">{post.body}</p>
         <p className="text-gray-600">

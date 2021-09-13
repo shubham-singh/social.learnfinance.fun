@@ -17,7 +17,7 @@ export interface ProfileFormState {
 }
 
 const ProfileSetup = () => {
-  const { newUser } = useAppSelector((state) => state.profile);
+  const { newUser } = useAppSelector((state) => state.auth.profile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

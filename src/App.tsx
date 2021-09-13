@@ -14,12 +14,13 @@ import Snackbar from './features/snackbar/snackbar';
 import { getAllPostAsync } from './features/post/postSlice';
 import TimeAgo from './features/post/timeAgo';
 import ComposePost from './features/post/composePost';
+import Profile from './features/profile/profile';
 
 function App() {
 
   const dispatch = useAppDispatch();
   const loggedIn = useAppSelector(state => state.auth.loggedIn);
-  const { newUser , profile: {username}} = useAppSelector(state => state.profile);
+  const { newUser , profile: {username}} = useAppSelector(state => state.auth.profile);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -49,6 +50,7 @@ function App() {
         <PrivateRoute path="/home" element={<Home />} />
         <PrivateRoute path="/compose" element={<ComposePost />} />
         <PrivateRoute path="/profile/create" element={<ProfileSetup />} />
+        <Route path="/:username" element={<Profile />} />
         <Route path="/:username/:postID" element={<SinglePost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
