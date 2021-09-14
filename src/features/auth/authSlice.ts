@@ -20,8 +20,8 @@ export interface ProfileState {
     username: string;
     name: string;
     bio: string;
-    following: [];
-    followers: [];
+    following: string[];
+    followers: string[];
   };
 }
 
@@ -98,10 +98,13 @@ export const authSlice = createSlice({
         }
       })
       .addCase(followAsync.fulfilled, (state, action) => {
-        state.profile.profile.following.concat(action.payload.profileID);
+        
+        const updatedFollowing = state.profile.profile.following.concat(action.payload.profileID);
+        state.profile.profile.following = updatedFollowing;
       })
       .addCase(unfollowAsync.fulfilled, (state, action) => {
-        state.profile.profile.following.filter(userID => userID !== action.payload.profileID);
+        const updatedFollowing = state.profile.profile.following.filter(userID => userID !== action.payload.profileID);
+        state.profile.profile.following = updatedFollowing;
       })
   },
 });
