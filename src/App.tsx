@@ -15,6 +15,7 @@ import { getAllPostAsync } from './features/post/postSlice';
 import TimeAgo from './features/post/timeAgo';
 import ComposePost from './features/post/composePost';
 import Profile from './features/profile/profile';
+import Notification from './features/notification/notification';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
         <PrivateRoute path="/home" element={<Home />} />
         <PrivateRoute path="/compose" element={<ComposePost />} />
         <PrivateRoute path="/profile/create" element={<ProfileSetup />} />
+        <PrivateRoute path="/notification" element={<Notification />} />
         <Route path="/:username" element={<Profile />} />
         <Route path="/:username/:postID" element={<SinglePost />} />
         <Route path="/login" element={<Login />} />

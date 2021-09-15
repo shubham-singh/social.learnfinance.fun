@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getNotificationAsync } from "../../utils/server.requests";
 import { UserState } from "../post/postSlice";
 
-interface NotificationState {
+export interface NotificationState {
   _id: string;
   isRead: boolean;
   sender: UserState;
@@ -16,7 +16,7 @@ export interface NotificationInterface {
 }
 
 const initialState = {
-  notifications: [],
+  notifications: []
 } as NotificationInterface;
 
 const notificationSlice = createSlice({
@@ -34,7 +34,7 @@ const notificationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getNotificationAsync.fulfilled, (state, action) => {
-      state.notifications = action.payload.notifications;
+      state.notifications = action.payload.notification.notifications;
     });
   },
 });

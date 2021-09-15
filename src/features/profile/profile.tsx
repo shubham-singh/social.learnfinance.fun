@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   followAsync,
-  getProfileByUsernameAsync,
   unfollowAsync,
 } from "../../utils/server.requests";
 import PostList from "../post/postList";
 import { getAllPostAsync } from "../post/postSlice";
 import { ReactComponent as BackIcon } from "../../assets/icons/BackIcon.svg";
 import { isFollowing } from "../../utils/function";
+import Loader from "../loader/loader";
+import { getProfileByUsernameAsync } from "./profileSlice";
 
 const Profile = () => {
   const { username } = useParams();
@@ -18,6 +19,10 @@ const Profile = () => {
   const profile = useAppSelector((state) => state.profile);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  // if (profile === null) {
+  //   return <></>
+  // }
 
   const isUserProfileSameAsProfile = profile.profile._id === userProfile.profile._id;
   const isUserFollowing = loggedIn ? isFollowing(userProfile.profile.following, profile.profile._id) : false;
@@ -48,6 +53,9 @@ const Profile = () => {
     dispatch(getAllPostAsync(username));
   }, [username]);
 
+  if (profile.status === "loading") {
+      return <Loader />
+  }
   return (
     <div className="h-screen">
       <div className="flex flex-col">

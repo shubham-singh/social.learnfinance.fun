@@ -14,9 +14,7 @@ const SinglePost = () => {
   const { username, postID } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  // const profileID = useAppSelector((state) => state.profile.profile._id);
   const profileID = useAppSelector((state) => state.auth.profile.profile._id);
-  // const profile = useAppSelector((state) => state.profile);
   const profile = useAppSelector((state) => state.auth.profile);
   const [post, setPost] = useState<PostState | null>(null);
 
@@ -47,7 +45,7 @@ const SinglePost = () => {
     return (
         <div className="flex flex-col m-3">
           <div className="mb-3 flex border-b items-center">
-            <BackIcon className="my-2 mr-7" onClick={() => navigate(-1)} />
+            <BackIcon className="my-2 mr-7 cursor-pointer" onClick={() => navigate(-1)} />
             <h1 className="text-lg font-bold">Post</h1>
           </div>
             <UserLayout image={post.author.img.profile} name={post.author.name} username={post.author.username} />

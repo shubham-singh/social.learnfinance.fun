@@ -184,20 +184,6 @@ export const getPostAsync = async (
   }
 };
 
-export const getProfileByUsernameAsync = createAsyncThunk(
-  "profile/getProfileByUsername",
-  async (username: string, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${PROFILE}/${username}`);
-      if (response.data.success) {
-        return response.data;
-      }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
 
 export const followAsync = createAsyncThunk(
   "auth/profile/follow",
