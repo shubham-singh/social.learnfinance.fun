@@ -5,6 +5,7 @@ import { getAllPostAsync, PostState } from "../post/postSlice";
 
 export interface ProfileState {
   status: "idle" | "loading" | "failed";
+  userExists: boolean;
   profile: {
     img: {
       profile: string;
@@ -27,11 +28,12 @@ export const getProfileByUsernameAsync = createAsyncThunk(
     try {
       const response = await axios.get(`${PROFILE}/${username}`);
       if (response.data.success) {
-        console.dir("Printing response",response.data);
+        if (response.data.profile === null) {
+          throw new Error(username);
+        }
         return response.data;
       }
     } catch (error: any) {
-      console.log("User not found error: ", error);
       return rejectWithValue(error.response.data);
     }
   }
@@ -39,6 +41,7 @@ export const getProfileByUsernameAsync = createAsyncThunk(
 
 const initialState = {
   status: "loading",
+  userExists: true,
   profile: {
     img: {
       profile: "",
@@ -86,9 +89,15 @@ export const profileSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getProfileByUsernameAsync.fulfilled, (state, action) => {
-        console.log("inside profileget success", action.payload)
         state.status = "idle";
         state.profile = action.payload.profile;
+        state.userExists = true;
+      })
+      .addCase(getProfileByUsernameAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.userExists = false;
+        state.profile.username = action.meta.arg;
+        state.profile.name = action.meta.arg;
       })
       .addCase(getAllPostAsync.pending, (state, action) => {
         state.status = "loading";
@@ -96,6 +105,11 @@ export const profileSlice = createSlice({
       .addCase(getAllPostAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.posts = action.payload.posts.posts;
+        state.userExists = true;
+      })
+      .addCase(getAllPostAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.userExists = false;
       });
   },
 });

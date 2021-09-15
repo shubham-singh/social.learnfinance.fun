@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { ReactComponent as BackIcon } from "../../assets/icons/BackIcon.svg";
+import TopBar from "../../components/topBar";
 import { NotificationState } from "./notificationSlice";
 
 const Notification = () => {
@@ -42,11 +43,11 @@ const Notification = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="m-3 flex border-b items-center">
+      {/* <div className="m-3 flex border-b items-center">
         <BackIcon className="my-2 mr-7 cursor-pointer" onClick={() => navigate(-1)} />
         <h1 className="font-bold text-lg">Notifications</h1>
-      </div>
-
+      </div> */}
+      <TopBar title="Notifications" />
       {notifications.length === 0 && <div className="text-5xl self-center flex-grow justify-self-center flex flex-col justify-center"><h1>Hmmm.. <br /> seems<br /> empty</h1></div>}
       {notifications?.map((notification) => {
         return (

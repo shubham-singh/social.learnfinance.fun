@@ -21,7 +21,7 @@ const ComposePost = () => {
 
   return (
     <div className="flex flex-col m-2 p-4 h-screen">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center py-2">
         <BackIcon className="cursor-pointer" onClick={() => navigate("/home")} />
         <button
           className="inline-block px-6 py-2 rounded-xl text-white bg-gray-600 cursor-pointer"

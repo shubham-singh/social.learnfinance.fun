@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useAppSelector } from "../../app/hooks";
 import PostList from "../post/postList";
 import { ReactComponent as CreateIcon } from "../../assets/icons/CreateIcon.svg";
-import Loader from "../loader/loader";
+import Loader from "../../components/loader";
 
 const Home = () => {
     const feed = useAppSelector((state) => state.feed);

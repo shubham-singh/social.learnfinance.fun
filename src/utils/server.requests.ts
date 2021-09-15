@@ -75,7 +75,6 @@ export const getFeedAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(FEED);
-      console.log(response.data);
       if (response.data.success) {
         return response.data;
       }

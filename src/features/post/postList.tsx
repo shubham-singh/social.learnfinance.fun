@@ -7,7 +7,6 @@ import { PostState, reactPostAsync } from "./postSlice";
 import UserLayout from "./userLayout";
 
 const PostList = ({ posts }: { posts: PostState[] }) => {
-  // const profileID = useAppSelector((state) => state.profile.profile._id);
   const profileID = useAppSelector((state) => state.auth.profile.profile._id);
   const dispatch = useDispatch();
 
