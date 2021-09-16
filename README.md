@@ -11,7 +11,12 @@
 - Public URL's for profile and post view
 - Profile doesn't exist feedback
 - Notifications
-- Like management
+- Compose post
+- Like post
+- Copy post link
+- Follow and Unfollow User
+- Profile setup
+- Edit profile
 
 # Techstack
 

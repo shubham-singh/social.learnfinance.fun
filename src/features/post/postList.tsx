@@ -25,7 +25,7 @@ const PostList = ({ posts }: { posts: PostState[] }) => {
         return (
           <div key={post._id} className="flex flex-col border-b m-0 p-4">
             <UserLayout
-              image={post.author.img.profile}
+              image={post.author.img.profile.src}
               name={`${post.author.name} ● ${timeAgo(post.createdAt)}`}
               username={post.author.username}
             />

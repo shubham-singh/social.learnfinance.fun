@@ -12,7 +12,6 @@ const Home = () => {
     }
     return (
         <div>
-            {/* <Link to="/profile/create">create profile</Link> */}
             <h1 className="heading text-center my-2">Learn Finance</h1>
             <CreateIcon className="btn-floating w-14 h-14 p-2 right-10 rounded-full bg-gray-900 shadow-lg cursor-pointer" onClick={() => navigate('/compose')} />
             <PostList posts={feed.feed} />

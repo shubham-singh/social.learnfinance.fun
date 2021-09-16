@@ -18,7 +18,7 @@ const Notification = () => {
           <Link to={`/${notification.sender.username}`}>
             <img
               className="w-10 h-10 bg-gray-600 rounded-full border-none"
-              src={notification.sender.img.profile}
+              src={notification.sender.img.profile.src}
             />
           </Link>
           <p className="mx-3"><span className="font-bold">{notification.sender.name}</span> Followed you</p>
@@ -31,7 +31,7 @@ const Notification = () => {
           <Link className="flex items-center" to={`/${username}/${notification.onItem}`}>
             <img
               className="w-10 h-10 bg-gray-600 rounded-full border-none"
-              src={notification.sender.img.profile}
+              src={notification.sender.img.profile.src}
             />
             <p className="mx-3"><span className="font-bold">{notification.sender.name}</span> liked your post</p>
           </Link>

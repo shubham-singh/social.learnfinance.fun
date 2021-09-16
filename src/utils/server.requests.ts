@@ -115,8 +115,10 @@ export const getNotificationAsync = createAsyncThunk(
 
 export const checkUsernameAsync = async (username: string) => {
   try {
-    const response = await axios.post(CHECK_USERNAME, username);
+    if (username === "") return false;
+    const response = await axios.post(CHECK_USERNAME, {username});
     if (response.data.success) {
+      console.log(response.data)
       if (response.data.isUsernameAvailable) {
         return true;
       } else {
@@ -128,7 +130,8 @@ export const checkUsernameAsync = async (username: string) => {
 
 export const createProfileAsync = createAsyncThunk(
   "profile/createProfile",
-  async (profileForm: ProfileFormState, { dispatch, rejectWithValue }) => {
+  // async (profileForm: ProfileFormState, { dispatch, rejectWithValue }) => {
+  async (profileForm: FormData, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.post(PROFILE, profileForm);
       if (response.data.success) {

@@ -3,13 +3,17 @@ import axios from "axios";
 import { PROFILE } from "../../utils/api.routes";
 import { getAllPostAsync, PostState } from "../post/postSlice";
 
-export interface ProfileState {
+export interface ProfileInterface {
   status: "idle" | "loading" | "failed";
   userExists: boolean;
   profile: {
     img: {
-      profile: string;
-      cover: string;
+      profile: {
+        src: string;
+      };
+      cover: {
+        src: string;
+      };
     };
     _id: string;
     user_id: string;
@@ -44,8 +48,12 @@ const initialState = {
   userExists: true,
   profile: {
     img: {
-      profile: "",
-      cover: "",
+      profile: {
+        src: ""
+      },
+      cover: {
+        src: ""
+      },
     },
     _id: "",
     user_id: "",
@@ -56,7 +64,7 @@ const initialState = {
     followers: [],
   },
   posts: [] as PostState[],
-} as ProfileState;
+} as ProfileInterface;
 
 export const profileSlice = createSlice({
   name: "profile",

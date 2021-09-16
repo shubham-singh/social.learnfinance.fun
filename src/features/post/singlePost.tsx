@@ -53,7 +53,7 @@ const SinglePost = () => {
         <TopBar title="Post" />
         <div className="m-3">
           <UserLayout
-            image={post.author.img.profile}
+            image={post.author.img.profile.src}
             name={post.author.name}
             username={post.author.username}
           />

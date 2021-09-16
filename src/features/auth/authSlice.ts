@@ -12,8 +12,12 @@ export interface ProfileState {
   newUser: boolean;
   profile: {
     img: {
-      profile: string;
-      cover: string;
+      profile: {
+        src: string;
+      };
+      cover: {
+        src: string;
+      };
     };
     _id: string;
     user_id: string;
@@ -42,8 +46,12 @@ const initialState: AuthState = {
     newUser: false,
     profile: {
       img: {
-        profile: "",
-        cover: "",
+        profile: {
+          src: ""
+        },
+        cover: {
+          src: ""
+        },
       },
       _id: "",
       user_id: "",

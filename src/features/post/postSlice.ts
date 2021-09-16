@@ -7,7 +7,9 @@ import { POST } from "../../utils/api.routes";
 export interface UserState {
   _id: string;
   img: {
-    profile: string;
+    profile: {
+      src: string;
+    };
   };
   name: string;
   username: string;

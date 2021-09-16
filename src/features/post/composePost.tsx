@@ -7,7 +7,7 @@ import { ReactComponent as BackIcon } from "../../assets/icons/BackIcon.svg";
 
 const ComposePost = () => {
   const [post, setPost] = useState("");
-  const image = useAppSelector((state) => state.auth.profile.profile.img.profile);
+  const image = useAppSelector((state) => state.auth.profile.profile.img.profile.src);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
