@@ -6,7 +6,6 @@ import {
   checkUsernameAsync,
   createProfileAsync,
 } from "../../utils/server.requests";
-import SetUsername from "./setUsername";
 import TopBar from "../../components/topBar";
 
 export interface ProfileFormState {
@@ -43,7 +42,7 @@ const ProfileSetup = () => {
 
   useEffect(() => {
     if (!newUser) {
-      navigate("/profile");
+      navigate(`/${userProfile.username}`);
     }
     if (formState.index >= 2) {
       let formData = new FormData();
@@ -99,7 +98,7 @@ const ProfileSetup = () => {
               if (e.code === "Space") {
                 setProfile({
                   ...profile,
-                  username: profile.username.slice(0, -1),
+                  username: profile.username.replace(/\s/g, ""),
                 });
               }
             }}
@@ -118,41 +117,50 @@ const ProfileSetup = () => {
     } else if (formState.index === 1) {
       return (
         <div className="h-screen w-5/6 flex flex-col justify-center items-center mx-auto">
+          <label htmlFor="imgCover" className="border-2 p-2 m-2">
+          Cover picture{profile.imgCover !== null ? " ✔️" : ""}
+          </label>
+          <input
+            id="imgCover"
+            type="file"
+            name="imgCover"
+            accept="image/png, image/jpeg"
+            onChange={(e) =>
+              setProfile({ ...profile, imgProfile: e.target.files![0] })
+            }
+            className="hidden"
+          />
+          <label
+            htmlFor="imgProfile"
+            className="border-2 p-2 m-2"
+          >
+            Profile picture {profile.imgProfile !== null ? " ✔️" : ""}
+          </label>
+          <input
+            id="imgProfile"
+            type="file"
+            name="imgProfile"
+            accept="image/png, image/jpeg"
+            onChange={(e) =>
+              setProfile({ ...profile, imgCover: e.target.files![0] })
+            }
+            className="hidden"
+          />
           <input
             className="p-3 my-2 border-2 border-gray-500 rounded-xl text-lg"
             type="text"
             required
-            autoFocus
             value={profile.name}
             onChange={(e) => setProfile({ ...profile, name: e.target.value })}
             placeholder="full name"
           />
           <textarea
             className="w-full p-3 my-2 border-2 border-gray-500 rounded-xl text-lg"
-            autoFocus
             value={profile.bio}
             onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
             placeholder="bio"
             maxLength={140}
           />
-              <h1>Profile picture</h1>
-              <input
-                type="file"
-                name="imgCover"
-                accept="image/png, image/jpeg"
-                onChange={(e) =>
-                  setProfile({ ...profile, imgCover: e.target.files![0] })
-                }
-              />
-              <h1>Cover picture</h1>
-              <input
-                type="file"
-                name="imgProfile"
-                accept="image/png, image/jpeg"
-                onChange={(e) =>
-                  setProfile({ ...profile, imgProfile: e.target.files![0] })
-                }
-              />
         </div>
       );
     }
@@ -164,7 +172,7 @@ const ProfileSetup = () => {
       <TopBar title="Profile Setup" />
       {loadForm()}
       <button
-        className="bg-green-500 py-3 px-6 block disabled:opacity-50"
+        className="bg-green-500 py-3 px-6 block font-bold disabled:opacity-50"
         onClick={() =>
           setFormState({
             ...formState,
@@ -173,7 +181,7 @@ const ProfileSetup = () => {
         }
         disabled={!formState.status}
       >
-        Next
+        {formState.index === 0 ? "Next" : "Submit"}
       </button>
     </div>
   );

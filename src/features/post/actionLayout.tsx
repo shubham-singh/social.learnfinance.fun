@@ -4,17 +4,27 @@ import { ReactComponent as CopyLinkIcon } from "../../assets/icons/CopyLink.svg"
 import { ReactComponent as HeartFillIcon } from "../../assets/icons/HeartFill.svg";
 import { ReactComponent as HeartOutlineIcon } from "../../assets/icons/HeartOutline.svg";
 import { useNavigate } from "react-router";
+import { ReactComponent as DeleteIcon } from "../../assets/icons/DeleteIcon.svg";
+import { deletePostAsync } from "../../utils/server.requests";
+import { PostState } from "./postSlice";
 
 const ActionLayout = ({
+  post,
+  postID,
   likeUnlike,
   isPostLiked,
   numberOfLikes,
+  singlePostView,
 }: {
+  post: PostState;
+  postID: string;
   likeUnlike: Function;
   isPostLiked: boolean;
   numberOfLikes: number;
+  singlePostView: boolean;
 }) => {
-  const loggedIn = useAppSelector((state) => state.auth.loggedIn)
+  const loggedIn = useAppSelector((state) => state.auth.loggedIn);
+  const userID = useAppSelector(state => state.auth.profile.profile._id); 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const copyToClipboard = () => {
@@ -25,7 +35,7 @@ const ActionLayout = ({
   return (
     <>
       <div className="flex flex-row justify-center items-center">
-        <span onClick={() => loggedIn ? likeUnlike() : navigate("/login")}>
+        <span onClick={() => (loggedIn ? likeUnlike() : navigate("/login"))}>
           {isPostLiked ? (
             <HeartFillIcon className="inline-block cursor-pointer" />
           ) : (
@@ -35,6 +45,17 @@ const ActionLayout = ({
         <span className="ml-2 text-gray-600 text-lg">{numberOfLikes}</span>
       </div>
       <CopyLinkIcon className="cursor-pointer" onClick={copyToClipboard} />
+      {(singlePostView && post.author._id === userID) && (
+        <DeleteIcon
+          className="cursor-pointer"
+          onClick={() => {
+            dispatch(deletePostAsync(post._id));
+            setTimeout(() => {
+              navigate("/home");
+            }, 1000);
+          }}
+        />
+      )}
     </>
   );
 };

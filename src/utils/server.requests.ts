@@ -12,7 +12,8 @@ import {
 } from "./api.routes";
 import { ProfileFormState } from "../features/profile/profileSetup";
 import { addPost, PostState } from "../features/post/postSlice";
-import { follow, unfollow } from "../features/profile/profileSlice";
+// import { follow, unfollow } from "../features/profile/profileSlice";
+import { follow, unfollow } from "../features/profile";
 import { deleteAuthToken } from "./function";
 import { NavigateFunction } from "react-router-dom";
 
@@ -157,6 +158,24 @@ export const createPostAsync = createAsyncThunk(
     }
   }
 );
+
+export const deletePostAsync = createAsyncThunk(
+  "post/delete",
+  async (postID: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${POST}/${postID}`);
+      if (response.data.success) {
+        console.log(response.data);
+        dispatch(showSnackbar("Deleted post"))
+        return {postID};
+      } else {
+        throw new Error("Could not delete post");
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
 
 export const likePostAsync = createAsyncThunk(
   "post/like",

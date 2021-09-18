@@ -9,7 +9,6 @@ import UserLayout from "./userLayout";
 import ActionLayout from "./actionLayout";
 import Loader from "../../components/loader";
 import TopBar from "../../components/topBar";
-// import { ReactComponent as BackIcon } from "../../assets/icons/BackIcon.svg";
 
 const SinglePost = () => {
   const { username, postID } = useParams();
@@ -46,10 +45,6 @@ const SinglePost = () => {
   if (post !== null) {
     return (
       <div className="flex flex-col">
-        {/* <div className="mb-3 flex border-b items-center">
-            <BackIcon className="my-2 mr-7 cursor-pointer" onClick={() => navigate(-1)} />
-            <h1 className="text-lg font-bold">Post</h1>
-          </div> */}
         <TopBar title="Post" />
         <div className="m-3">
           <UserLayout
@@ -63,9 +58,12 @@ const SinglePost = () => {
           </p>
           <div className="flex flex-row justify-evenly items-center border-t border-b p-2">
             <ActionLayout
+              post={post}
+              postID={post._id}
               isPostLiked={isPostLiked}
               likeUnlike={likeUnlike}
               numberOfLikes={post.likes.length}
+              singlePostView={true}
             />
           </div>
         </div>

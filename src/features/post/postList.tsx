@@ -34,9 +34,12 @@ const PostList = ({ posts }: { posts: PostState[] }) => {
             </Link>
             <div className="flex flex-row justify-evenly items-center mt-2">
               <ActionLayout
+                post={post}
+                postID={post._id}
                 isPostLiked={isPostLiked}
                 likeUnlike={() => dispatch(reactPostAsync(post._id))}
                 numberOfLikes={post.likes.length}
+                singlePostView={false}
               />
             </div>
           </div>

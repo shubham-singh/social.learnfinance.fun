@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPostAsync, getFeedAsync } from "../../utils/server.requests";
+import { createPostAsync, deletePostAsync, getFeedAsync } from "../../utils/server.requests";
 import { PostState, reactPostAsync } from "../post/postSlice";
 
 interface FeedState {
@@ -8,7 +8,8 @@ interface FeedState {
 }
 
 const initialState = {
-  status: "loading"
+  status: "loading",
+  feed: []
 } as FeedState;
 
 const feedSlice = createSlice({
@@ -39,7 +40,11 @@ const feedSlice = createSlice({
         } else {
           state.feed[existingPost].likes.push(action.payload.profileID);
         }
-      });
+      })
+      .addCase(deletePostAsync.fulfilled, (state, action) => ({
+        ...state,
+        feed: state.feed.filter(post => post._id !== action.payload.postID)
+      }))
   },
 });
 

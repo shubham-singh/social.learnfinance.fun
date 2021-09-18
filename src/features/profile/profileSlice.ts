@@ -1,7 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { PROFILE } from "../../utils/api.routes";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { POST, PROFILE } from "../../utils/api.routes";
+// import { deletePostAsync } from "../../utils/server.requests";
 import { getAllPostAsync, PostState } from "../post/postSlice";
+import { showSnackbar } from "../snackbar/snackbarSlice";
 
 export interface ProfileInterface {
   status: "idle" | "loading" | "failed";
@@ -25,6 +27,24 @@ export interface ProfileInterface {
   };
   posts: PostState[];
 }
+
+export const deletePostAsync = createAsyncThunk(
+  "post/delete",
+  async (postID: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${POST}/postID`);
+      if (response.data.success) {
+        console.log(response.data);
+        dispatch(showSnackbar("Deleted post"))
+        return {postID};
+      } else {
+        throw new Error("Could not delete post");
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
 
 export const getProfileByUsernameAsync = createAsyncThunk(
   "profile/getProfileByUsername",
@@ -93,7 +113,7 @@ export const profileSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getProfileByUsernameAsync.pending, (state, action) => {
+      .addCase(getProfileByUsernameAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(getProfileByUsernameAsync.fulfilled, (state, action) => {
@@ -106,8 +126,10 @@ export const profileSlice = createSlice({
         state.userExists = false;
         state.profile.username = action.meta.arg;
         state.profile.name = action.meta.arg;
+        state.profile.img.profile.src = "";
+        state.profile.img.cover.src = "";
       })
-      .addCase(getAllPostAsync.pending, (state, action) => {
+      .addCase(getAllPostAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(getAllPostAsync.fulfilled, (state, action) => {
@@ -118,7 +140,11 @@ export const profileSlice = createSlice({
       .addCase(getAllPostAsync.rejected, (state, action) => {
         state.status = "idle";
         state.userExists = false;
-      });
+      })
+      .addCase(deletePostAsync.fulfilled, (state, action) => ({
+        ...state,
+        posts: state.posts.filter(post => post._id === action.payload.postID)
+      }))
   },
 });
 
