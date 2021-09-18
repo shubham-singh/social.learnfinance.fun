@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { followAsync, unfollowAsync } from "../../utils/server.requests";
+import { followAsync, getProfileByUsernameAsync, unfollowAsync } from "../../utils/server.requests";
 import PostList from "../post/postList";
 import { getAllPostAsync } from "../post/postSlice";
 import { isFollowing } from "../../utils/function";
 import Loader from "../../components/loader";
-import { getProfileByUsernameAsync } from "./profileSlice";
 import TopBar from "../../components/topBar";
 import ProfileUserLayout from "./profileUserLayout";
 import ShowMessage from "../../components/showMessage";

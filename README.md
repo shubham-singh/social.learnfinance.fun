@@ -12,6 +12,7 @@
 - Profile doesn't exist feedback
 - Notifications
 - Compose post
+- Delete post
 - Like post
 - Copy post link
 - Follow and Unfollow User

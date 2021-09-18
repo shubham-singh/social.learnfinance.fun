@@ -12,8 +12,6 @@ import {
 } from "./api.routes";
 import { ProfileFormState } from "../features/profile/profileSetup";
 import { addPost, PostState } from "../features/post/postSlice";
-// import { follow, unfollow } from "../features/profile/profileSlice";
-import { follow, unfollow } from "../features/profile";
 import { deleteAuthToken } from "./function";
 import { NavigateFunction } from "react-router-dom";
 
@@ -66,6 +64,23 @@ export const getProfileAsync = createAsyncThunk(
       if (error.response.data.error === "jwt expired") {
         deleteAuthToken();
       }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getProfileByUsernameAsync = createAsyncThunk(
+  "profile/getProfileByUsername",
+  async (username: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${PROFILE}/${username}`);
+      if (response.data.success) {
+        if (response.data.profile === null) {
+          throw new Error(username);
+        }
+        return response.data;
+      }
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
@@ -212,7 +227,7 @@ export const followAsync = createAsyncThunk(
     try {
       const response = await axios.post(`${PROFILE}/follow`, {profileID});
       if (response.data.success) {
-        dispatch(follow(userID))
+        // dispatch(follow(userID))
         return response.data;
       }
     } catch (error: any) {
@@ -227,7 +242,7 @@ export const followAsync = createAsyncThunk(
       try {
         const response = await axios.post(`${PROFILE}/unfollow`, {profileID});
         if (response.data.success) {
-          dispatch(unfollow(userID))
+          // dispatch(unfollow(userID))
           return response.data;
       }
     } catch (error: any) {

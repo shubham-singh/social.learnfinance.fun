@@ -1,9 +1,7 @@
-import axios from "axios";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { POST, PROFILE } from "../../utils/api.routes";
-// import { deletePostAsync } from "../../utils/server.requests";
+import { createSlice } from "@reduxjs/toolkit";
+import { deletePostAsync, getProfileByUsernameAsync } from "../../utils/server.requests";
 import { getAllPostAsync, PostState } from "../post/postSlice";
-import { showSnackbar } from "../snackbar/snackbarSlice";
+import { followAsync, unfollowAsync } from "../../utils/server.requests";
 
 export interface ProfileInterface {
   status: "idle" | "loading" | "failed";
@@ -27,41 +25,6 @@ export interface ProfileInterface {
   };
   posts: PostState[];
 }
-
-export const deletePostAsync = createAsyncThunk(
-  "post/delete",
-  async (postID: string, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await axios.delete(`${POST}/postID`);
-      if (response.data.success) {
-        console.log(response.data);
-        dispatch(showSnackbar("Deleted post"))
-        return {postID};
-      } else {
-        throw new Error("Could not delete post");
-      }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-)
-
-export const getProfileByUsernameAsync = createAsyncThunk(
-  "profile/getProfileByUsername",
-  async (username: string, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${PROFILE}/${username}`);
-      if (response.data.success) {
-        if (response.data.profile === null) {
-          throw new Error(username);
-        }
-        return response.data;
-      }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
 
 const initialState = {
   status: "loading",
@@ -90,26 +53,6 @@ export const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    follow: (state, action) => {
-      // if (state.profile !== null) {
-      //   const updatedFollowers = state.profile.followers.concat(action.payload);
-      //   state.profile.followers = updatedFollowers;
-      // }
-      const updatedFollowers = state.profile.followers.concat(action.payload);
-      state.profile.followers = updatedFollowers;
-    },
-    unfollow: (state, action) => {
-      // if (state.profile !== null) {
-      //   const updatedFollowers = state.profile.followers.filter(
-      //     (id) => id !== action.payload
-      //   );
-      //   state.profile.followers = updatedFollowers;
-      // }
-      const updatedFollowers = state.profile.followers.filter(
-        (id) => id !== action.payload
-      );
-      state.profile.followers = updatedFollowers;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -145,9 +88,17 @@ export const profileSlice = createSlice({
         ...state,
         posts: state.posts.filter(post => post._id === action.payload.postID)
       }))
+      .addCase(followAsync.fulfilled, (state, action) => {
+        const updatedFollowers = state.profile.followers.concat(action.payload.followedBy);
+        state.profile.followers = updatedFollowers;
+      })
+      .addCase(unfollowAsync.fulfilled, (state, action) => {
+        const updatedFollowers = state.profile.followers.filter(
+          (id) => id !== action.payload.unfollowedBy
+        );
+        state.profile.followers = updatedFollowers;
+      })
   },
 });
-
-export const { follow, unfollow } = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -1,1 +1,0 @@
-export { follow, unfollow } from "./profileSlice";

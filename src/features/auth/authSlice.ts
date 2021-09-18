@@ -106,7 +106,6 @@ export const authSlice = createSlice({
         }
       })
       .addCase(followAsync.fulfilled, (state, action) => {
-        
         const updatedFollowing = state.profile.profile.following.concat(action.payload.profileID);
         state.profile.profile.following = updatedFollowing;
       })

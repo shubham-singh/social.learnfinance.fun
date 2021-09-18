@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import Acquaintance from "../../components/acquaintance";
 import { ProfileInterface } from "./profileSlice";
 
 const ProfileUserLayout = ({
@@ -17,14 +18,20 @@ const ProfileUserLayout = ({
   const navigate = useNavigate();
   return (
     <>
-      <div className="w-full h-1/4">
+      <div className="flex justify-center items-center h-1/4">
+        <img
+          className="min-h-full min-w-full flex-shrink-0 block bg-gray-200"
+          src={profile.profile.img.cover.src}
+        />
+      </div>
+      {/* <div className="w-full h-1/4">
         <img
           className="min-h-full object-cover block bg-gray-200"
           src={profile.profile.img.cover.src}
         />
-      </div>
+      </div> */}
 
-      <div className="flex flex-col relative -top-10">
+      <div className="flex flex-col relative -top-10 md:-top-4">
         <div className="flex justify-between mx-6">
           <img
             className="w-24 h-24 md:w-36 md:h-36 rounded-full border-4 border-white bg-gray-400"
@@ -49,20 +56,7 @@ const ProfileUserLayout = ({
           <p className="font-bold">{profile.profile.name}</p>
           <p className="">@{profile.profile.username}</p>
           <p className="mt-4 my-2">{profile.profile.bio}</p>
-          <div className="flex flex-row">
-            <p className="mr-7">
-              <span className="font-bold">
-                {profile.profile.following.length}
-              </span>{" "}
-              Following
-            </p>
-            <p>
-              <span className="font-bold">
-                {profile.profile.followers.length}
-              </span>{" "}
-              Followers
-            </p>
-          </div>
+          <Acquaintance followingCount={profile.profile.following.length} followerCount={profile.profile.followers.length} />
         </div>
       </div>
     </>

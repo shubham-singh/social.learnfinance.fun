@@ -28,7 +28,12 @@ const ActionLayout = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const url = new URL(window.location.href);
+    if (singlePostView) {
+      navigator.clipboard.writeText(url.href);
+    } else {
+      navigator.clipboard.writeText(`${url.host}/${post.author.username}/${post._id}`);
+    }
     dispatch(showSnackbar("Copied to clipboard"));
   };
 
