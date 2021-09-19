@@ -53,7 +53,7 @@ const SinglePost = () => {
             username={post.author.username}
           />
           <p className="text-xl mt-4 mb-4">{post.body}</p>
-          <img src={post.img?.src} className="my-3" />
+          <img src={post.img?.src} className="my-3 block mx-auto" />
           <p className="text-gray-600">
             {format(parseJSON(post.createdAt), "PPpp")}
           </p>

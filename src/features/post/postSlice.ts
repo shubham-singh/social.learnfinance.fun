@@ -72,6 +72,9 @@ const postSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getAllPostAsync.pending, (state, action) => {
+        state.posts = [];
+      })
       .addCase(getAllPostAsync.fulfilled, (state, action) => {
         return {
           posts: state.posts.concat(action.payload.posts.posts),
