@@ -19,6 +19,9 @@ export interface PostState {
   _id: string;
   author: UserState;
   body: string;
+  img?: {
+    src: string
+  }
   likes: any[];
   createdAt: string;
 }

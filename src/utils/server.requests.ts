@@ -161,9 +161,9 @@ export const createProfileAsync = createAsyncThunk(
 
 export const createPostAsync = createAsyncThunk(
   "post/create",
-  async (post: string, { dispatch, rejectWithValue }) => {
+  async (postForm: FormData, { dispatch, rejectWithValue }) => {
     try {
-      const response = await axios.post(POST, { body: post });
+      const response = await axios.post(POST, postForm);
       if (response.data.success) {
         dispatch(addPost(response.data));
         return response.data;

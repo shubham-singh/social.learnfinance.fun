@@ -22,6 +22,7 @@ const PostList = ({ posts }: { posts: PostState[] }) => {
     <div>
       {sortedPosts?.map((post) => {
         const isPostLiked = isLiked(post.likes, profileID);
+        console.log(post);
         return (
           <div key={post._id} className="flex flex-col border-b m-0 p-4">
             <UserLayout
@@ -29,8 +30,9 @@ const PostList = ({ posts }: { posts: PostState[] }) => {
               name={`${post.author.name} ● ${timeAgo(post.createdAt)}`}
               username={post.author.username}
             />
-            <Link to={`/${post.author.username}/${post._id}`}>
+            <Link to={`/${post.author.username}/${post._id}`} className="">
               <p className="text-xl mt-2">{post.body}</p>
+              {post.img !== undefined && <img className="block mx-auto" src={post.img.src} />}
             </Link>
             <div className="flex flex-row justify-evenly items-center mt-2">
               <ActionLayout
