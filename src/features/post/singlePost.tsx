@@ -60,13 +60,27 @@ const SinglePost = () => {
           <div className="flex flex-row justify-evenly items-center border-t border-b p-2">
             <ActionLayout
               post={post}
-              postID={post._id}
               isPostLiked={isPostLiked}
               likeUnlike={likeUnlike}
               numberOfLikes={post.likes.length}
               singlePostView={true}
             />
           </div>
+        <div className="mx-3">
+          {post.replies.map(reply => {
+            return (
+              <div className="py-2 border-b">
+                <UserLayout
+                  image={reply.author.img.profile.src}
+                  name={reply.author.name}
+                  username={reply.author.username}
+                />
+                <p className="text-xl mt-4 mb-4">{reply.body}</p>
+                <img src={reply.img?.src} className="my-3 block mx-auto" />
+              </div>
+            )
+          })}
+        </div>
         </div>
       </div>
     );

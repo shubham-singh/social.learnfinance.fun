@@ -3,6 +3,7 @@ import { showSnackbar } from "../snackbar/snackbarSlice";
 import { ReactComponent as CopyLinkIcon } from "../../assets/icons/CopyLink.svg";
 import { ReactComponent as HeartFillIcon } from "../../assets/icons/HeartFill.svg";
 import { ReactComponent as HeartOutlineIcon } from "../../assets/icons/HeartOutline.svg";
+import { ReactComponent as ReplyIcon } from "../../assets/icons/ReplyIcon.svg";
 import { useNavigate } from "react-router";
 import { ReactComponent as DeleteIcon } from "../../assets/icons/DeleteIcon.svg";
 import { deletePostAsync } from "../../utils/server.requests";
@@ -10,14 +11,12 @@ import { PostState } from "./postSlice";
 
 const ActionLayout = ({
   post,
-  postID,
   likeUnlike,
   isPostLiked,
   numberOfLikes,
   singlePostView,
 }: {
   post: PostState;
-  postID: string;
   likeUnlike: Function;
   isPostLiked: boolean;
   numberOfLikes: number;
@@ -27,6 +26,7 @@ const ActionLayout = ({
   const userID = useAppSelector(state => state.auth.profile.profile._id); 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const copyToClipboard = () => {
     const url = new URL(window.location.href);
     if (singlePostView) {
@@ -39,6 +39,10 @@ const ActionLayout = ({
 
   return (
     <>
+    <div className="flex flex-row justify-center items-center">
+        <ReplyIcon className="cursor-pointer" onClick={() => navigate(`/reply/${post.author.username}/${post._id}/`)} />
+          <span className="ml-2 text-gray-600 text-lg">{post.replies.length}</span>
+    </div>
       <div className="flex flex-row justify-center items-center">
         <span onClick={() => (loggedIn ? likeUnlike() : navigate("/login"))}>
           {isPostLiked ? (

@@ -11,5 +11,6 @@ export const PROFILE = `${domain}/profile`;
 export const NOTIFICATION = `${domain}/notification`;
 export const FEED = `${domain}/feed`;
 export const POST = `${domain}/post`;
+export const REPLY = `${domain}/reply`;
 export const CHECK_USERNAME = `${domain}/profile/username/check`;
 export const CHANGE_USERNAME = `${domain}/profile/username/change`;

@@ -6,11 +6,13 @@ import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import ScrollToTop from "./components/scrollToTop";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
+        <ScrollToTop />
         <App />
       </Router>
     </Provider>

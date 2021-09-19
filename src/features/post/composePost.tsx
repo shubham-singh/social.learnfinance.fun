@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useAppSelector } from "../../app/hooks";
-import { createPostAsync } from "../../utils/server.requests";
+import { createPostAsync, replyAsync } from "../../utils/server.requests";
 import { ReactComponent as BackIcon } from "../../assets/icons/BackIcon.svg";
 import { ReactComponent as ImageIcon } from "../../assets/icons/ImageIcon.svg";
 
@@ -11,25 +11,34 @@ interface newPostState {
   image: File | null;
 }
 
-const ComposePost = () => {
+const ComposePost = ({isReply=false} : {isReply?: boolean}) => {
   const [post, setPost] = useState({} as newPostState);
   const image = useAppSelector((state) => state.auth.profile.profile.img.profile.src);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { postID, username } = useParams();
+  
   const handleCLick = () => {
     let postForm = new FormData();
     postForm.append("body", post.body);
     if (post.image !== null) {
       postForm.append("image", post.image);
     }
-    dispatch(createPostAsync(postForm));
+    if (isReply) {
+      postForm.append("postID", postID);
+      dispatch(replyAsync(postForm));
+      setTimeout(() => {
+        navigate(`/${username}/${postID}`)
+      }, 500);
+    } else {
+      dispatch(createPostAsync(postForm));
+    }
     setPost({body: "", image: null});
     setTimeout(() => {
       navigate("/home");
     }, 400);
   };
-
+  console.log("postID: ", postID);
   return (
     <div className="flex flex-col m-2 p-4 h-screen">
       <div className="flex justify-between items-center py-2">
@@ -38,7 +47,7 @@ const ComposePost = () => {
           className="inline-block px-6 py-2 rounded-xl text-white bg-gray-600 cursor-pointer"
           onClick={handleCLick}
         >
-          Post
+          {isReply ? "Reply" : "Post"}
         </button>
       </div>
       <div className="flex h-1/2 flex-row mt-4">
@@ -52,7 +61,7 @@ const ComposePost = () => {
         </div>
         <textarea
           className="block flex-grow h-full p-2 text-xl"
-          placeholder="What's happening?"
+          placeholder={ isReply ? `Replying to @${username}` :"What's happening?"}
           value={post.body}
           onChange={(e) => setPost({...post, body: e.target.value})}
           maxLength={280}

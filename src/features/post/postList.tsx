@@ -22,7 +22,6 @@ const PostList = ({ posts }: { posts: PostState[] }) => {
     <div>
       {sortedPosts?.map((post) => {
         const isPostLiked = isLiked(post.likes, profileID);
-        console.log(post);
         return (
           <div key={post._id} className="flex flex-col border-b m-0 p-4">
             <UserLayout
@@ -37,7 +36,6 @@ const PostList = ({ posts }: { posts: PostState[] }) => {
             <div className="flex flex-row justify-evenly items-center mt-2">
               <ActionLayout
                 post={post}
-                postID={post._id}
                 isPostLiked={isPostLiked}
                 likeUnlike={() => dispatch(reactPostAsync(post._id))}
                 numberOfLikes={post.likes.length}

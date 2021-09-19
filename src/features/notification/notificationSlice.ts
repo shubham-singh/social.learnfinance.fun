@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getNotificationAsync } from "../../utils/server.requests";
+import {
+  getNotificationAsync,
+  readNotificationAsync,
+} from "../../utils/server.requests";
 import { UserState } from "../post/postSlice";
 
 export interface NotificationState {
   _id: string;
   isRead: boolean;
   sender: UserState;
-  type: "LIKED" | "FOLLOWED";
+  type: "LIKED" | "FOLLOWED" | "REPLY";
   onItem: string;
   createdAt: string;
 }
@@ -16,7 +19,7 @@ export interface NotificationInterface {
 }
 
 const initialState = {
-  notifications: []
+  notifications: [],
 } as NotificationInterface;
 
 const notificationSlice = createSlice({
@@ -33,9 +36,21 @@ const notificationSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getNotificationAsync.fulfilled, (state, action) => {
-      state.notifications = action.payload.notification.notifications;
-    });
+    builder
+      .addCase(getNotificationAsync.fulfilled, (state, action) => {
+        state.notifications = action.payload.notification.notifications;
+      })
+      .addCase(readNotificationAsync.fulfilled, (state, action) => {
+        state.notifications = state.notifications.map((notification) => {
+          if (notification._id === action.payload.notification._id) {
+            return {
+              ...notification,
+              isRead: true,
+            };
+          }
+          return notification;
+        });
+      });
   },
 });
 

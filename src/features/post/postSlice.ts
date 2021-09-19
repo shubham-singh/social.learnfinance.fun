@@ -15,6 +15,16 @@ export interface UserState {
   username: string;
 }
 
+export interface ReplyState {
+  author: UserState;
+  body: string;
+  img?: {
+    src: string;
+  }
+  likes: any[];
+  createdAt: string;
+}
+
 export interface PostState {
   _id: string;
   author: UserState;
@@ -23,6 +33,7 @@ export interface PostState {
     src: string
   }
   likes: any[];
+  replies: ReplyState[];
   createdAt: string;
 }
 
