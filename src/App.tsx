@@ -24,6 +24,7 @@ import ComposePost from "./features/post/composePost";
 import Profile from "./features/profile/profile";
 import Notification from "./features/notification/notification";
 import Navbar from "./components/navbar";
+import Sidebar from "./components/sidebar";
 
 function App() {
   const [nav, setNav] = useState<boolean>(false);
@@ -71,11 +72,12 @@ function App() {
         </Routes>
       </div>
 
-      {["/login", "/signup", "/"].includes(location.pathname) ? null : (
+      {["/login", "/signup", "/"].includes(location.pathname) ? null : <Sidebar />}
+      {/* {["/login", "/signup", "/"].includes(location.pathname) ? null : (
         <div className="w-1/4 hidden md:block md:sticky md:top-0">
           <ComposePost />
         </div>
-      )}
+      )} */}
 
     </div>
   );
