@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deletePostAsync, getProfileByUsernameAsync } from "../../utils/server.requests";
-import { getAllPostAsync, PostState } from "../post/postSlice";
-import { followAsync, unfollowAsync } from "../../utils/server.requests";
+import { createPostAsync, deletePostAsync, getProfileByUsernameAsync } from "../../utils/server.requests";
+import { followAsync, unfollowAsync, getAllPostAsync } from "../../utils/server.requests";
+import { PostState } from "../post/types";
 
 export interface ProfileInterface {
   status: "idle" | "loading" | "failed";
@@ -97,6 +97,11 @@ export const profileSlice = createSlice({
           (id) => id !== action.payload.unfollowedBy
         );
         state.profile.followers = updatedFollowers;
+      })
+      .addCase(createPostAsync.fulfilled, (state, action) => {
+        if (state.profile._id === action.payload.post.author._id) {
+          state.posts = state.posts.concat(action.payload.post);
+        }
       })
   },
 });

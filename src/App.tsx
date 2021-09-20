@@ -28,35 +28,36 @@ import Sidebar from "./components/sidebar";
 
 function App() {
   const [nav, setNav] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
   const loggedIn = useAppSelector((state) => state.auth.loggedIn);
-  const {
-    newUser,
-    profile: { username},
-  } = useAppSelector((state) => state.auth.profile);
+  const { newUser, profile: {username} } = useAppSelector((state) => state.auth.profile);
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (newUser) {
-      navigate("/profile/setup");
-    }
-  }, [newUser]);
 
   useEffect(() => {
     setupAuthHeaderForServiceCalls();
     if (loggedIn) {
       dispatch(getProfileAsync(navigate));
+    }
+  }, [loggedIn, dispatch, navigate]);
+
+
+  useEffect(() => {
+    if (newUser) {
+      navigate("/profile/setup");
+    } else {
       dispatch(getFeedAsync());
       dispatch(getNotificationAsync());
     }
-  }, [loggedIn, dispatch, username]);
+  }, [newUser, username, navigate, dispatch]);
+
 
   return (
     <div className="App md:flex md:relative">
+    
       <Snackbar />
       
-      {["/login", "/signup", "/"].includes(location.pathname) ? null : <Navbar nav={nav} setNav={setNav} />}
+      {["/login", "/signup", "/", "/profile/setup"].includes(location.pathname) ? null : <Navbar nav={nav} setNav={setNav} />}
 
       <div className="flex-grow md:w-1/2">
         <Routes>
@@ -73,12 +74,7 @@ function App() {
         </Routes>
       </div>
 
-      {["/login", "/signup", "/"].includes(location.pathname) ? null : <Sidebar />}
-      {/* {["/login", "/signup", "/"].includes(location.pathname) ? null : (
-        <div className="w-1/4 hidden md:block md:sticky md:top-0">
-          <ComposePost />
-        </div>
-      )} */}
+      {["/login", "/signup", "/", "/profile/setup"].includes(location.pathname) ? null : <Sidebar />}
 
     </div>
   );

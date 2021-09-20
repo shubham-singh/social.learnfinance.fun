@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createPostAsync, deletePostAsync, getFeedAsync } from "../../utils/server.requests";
-import { PostState, reactPostAsync } from "../post/postSlice";
+import { createPostAsync, deletePostAsync, getFeedAsync, replyAsync } from "../../utils/server.requests";
+import { PostState } from "../post/types";
+import { reactPostAsync } from "../../utils/server.requests";
 
 interface FeedState {
   status: "idle" | "loading" | "failed";
@@ -45,6 +46,12 @@ const feedSlice = createSlice({
         ...state,
         feed: state.feed.filter(post => post._id !== action.payload.postID)
       }))
+      .addCase(replyAsync.fulfilled, (state, action) => {
+        const post = state.feed.findIndex(post => post._id === action.payload.reply.to);
+        if (post !== -1) {
+          state.feed[post].replies = state.feed[post].replies.concat(action.payload.reply._id);
+        }
+      })
   },
 });
 

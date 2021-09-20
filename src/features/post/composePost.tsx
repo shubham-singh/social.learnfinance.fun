@@ -29,7 +29,7 @@ const ComposePost = ({isReply=false} : {isReply?: boolean}) => {
       dispatch(replyAsync(postForm));
       setTimeout(() => {
         navigate(`/${username}/${postID}`)
-      }, 500);
+      }, 2000);
     } else {
       dispatch(createPostAsync(postForm));
     }
@@ -38,7 +38,7 @@ const ComposePost = ({isReply=false} : {isReply?: boolean}) => {
       navigate("/home");
     }, 400);
   };
-  console.log("postID: ", postID);
+  
   return (
     <div className="flex flex-col m-2 p-4 h-screen">
       <div className="flex justify-between items-center py-2">
@@ -55,6 +55,7 @@ const ComposePost = ({isReply=false} : {isReply?: boolean}) => {
           <img
             className="w-12 h-12 bg-gray-600 rounded-full border-none"
             src={image}
+            alt="profile"
             />
             <label htmlFor="image" className="mt-6"><ImageIcon /></label>
           <input type="file" id="image" name="image" className="hidden" onChange={(e) => setPost({...post, image: e.target.files![0]})} />

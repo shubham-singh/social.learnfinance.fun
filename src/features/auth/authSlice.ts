@@ -72,6 +72,7 @@ export const authSlice = createSlice({
       state.token = localStorage.removeItem("auth_learnfinance");
       state.firstName = "";
       state.loggedIn = false;
+      state.profile = initialState.profile;
     },
     user_info: (state, action) => {
       state.firstName = action.payload.firstName;
@@ -97,7 +98,7 @@ export const authSlice = createSlice({
       })
       .addCase(createProfileAsync.fulfilled, (state, action) => {
         state.profile.newUser = false;
-        state.profile = action.payload.profile;
+        state.profile.profile = action.payload.profile;
       })
       .addCase(getProfileAsync.fulfilled, (state, action) => {
         state.profile.newUser = action.payload.newUser;

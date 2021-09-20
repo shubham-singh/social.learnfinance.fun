@@ -11,8 +11,7 @@ import {
   REPLY,
   SIGNUP,
 } from "./api.routes";
-import { ProfileFormState } from "../features/profile/profileSetup";
-import { addPost, PostState } from "../features/post/postSlice";
+import { PostState } from "../features/post/types";
 import { deleteAuthToken } from "./function";
 import { NavigateFunction } from "react-router-dom";
 
@@ -63,6 +62,7 @@ export const getProfileAsync = createAsyncThunk(
       }
     } catch (error: any) {
       if (error.response.data.error === "jwt expired") {
+        dispatch(showSnackbar("Please Login Again"));
         deleteAuthToken();
       }
       return rejectWithValue(error.response.data);
@@ -82,6 +82,7 @@ export const getProfileByUsernameAsync = createAsyncThunk(
         return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
@@ -89,13 +90,14 @@ export const getProfileByUsernameAsync = createAsyncThunk(
 
 export const getFeedAsync = createAsyncThunk(
   "feed/getFeed",
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.get(FEED);
       if (response.data.success) {
         return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
@@ -103,13 +105,14 @@ export const getFeedAsync = createAsyncThunk(
 
 export const getNotificationAsync = createAsyncThunk(
   "notification/getNotification",
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.get(NOTIFICATION);
       if (response.data.success) {
         return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
@@ -117,39 +120,53 @@ export const getNotificationAsync = createAsyncThunk(
 
 export const readNotificationAsync = createAsyncThunk(
   "notification/read",
-  async (notificationID: string, {rejectWithValue}) => {
+  async (notificationID: string, {dispatch, rejectWithValue}) => {
     try {
       const response = await axios.post(NOTIFICATION, {notificationID});
       if (response.data.success) {
         return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
 )
 
-// export const getAllPostAsync = createAsyncThunk(
-//   "post/getAllPost",
-//   async (username: string, { rejectWithValue }) => {
-//     try {
-//       console.log(`${POST}/${username}`);
-//       const response = await axios.get(`${POST}/${username}`);
-//       if (response.data.success) {
-//         return response.data;
-//       } else throw new Error("could not get your posts");
-//     } catch (error: any) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
+export const getAllPostAsync = createAsyncThunk(
+  "post/getAllPost",
+  async (username: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${POST}/${username}`);
+      if (response.data.success) {
+        return response.data;
+      } else throw new Error("could not get your posts");
+    } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
+export const reactPostAsync = createAsyncThunk(
+  "post/like",
+  async (postID: string, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${POST}/${postID}/react`, { postID });
+      if (response.data.success) {
+        return response.data;
+      }
+    } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 export const checkUsernameAsync = async (username: string) => {
   try {
     if (username === "") return false;
     const response = await axios.post(CHECK_USERNAME, {username});
     if (response.data.success) {
-      console.log(response.data)
       if (response.data.isUsernameAvailable) {
         return true;
       } else {
@@ -161,7 +178,6 @@ export const checkUsernameAsync = async (username: string) => {
 
 export const createProfileAsync = createAsyncThunk(
   "profile/createProfile",
-  // async (profileForm: ProfileFormState, { dispatch, rejectWithValue }) => {
   async (profileForm: FormData, { dispatch, rejectWithValue }) => {
     try {
       const response = await axios.post(PROFILE, profileForm);
@@ -169,6 +185,7 @@ export const createProfileAsync = createAsyncThunk(
         return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
@@ -180,10 +197,11 @@ export const createPostAsync = createAsyncThunk(
     try {
       const response = await axios.post(POST, postForm);
       if (response.data.success) {
-        dispatch(addPost(response.data));
+        dispatch(showSnackbar("Yay! Posted"));
         return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
@@ -195,10 +213,11 @@ export const replyAsync = createAsyncThunk(
     try {
       const response = await axios.post(REPLY, replyForm);
       if (response.data.success) {
+        dispatch(showSnackbar("Reply sent"));
         return response.data;
       }
-    } catch (error) {
-
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
   }
 )
@@ -209,31 +228,17 @@ export const deletePostAsync = createAsyncThunk(
     try {
       const response = await axios.delete(`${POST}/${postID}`);
       if (response.data.success) {
-        console.log(response.data);
         dispatch(showSnackbar("Deleted post"))
         return {postID};
       } else {
         throw new Error("Could not delete post");
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
 )
-
-export const likePostAsync = createAsyncThunk(
-  "post/like",
-  async (postID: string, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await axios.post(`${POST}/${postID}`, postID);
-      if (response.data.success) {
-        return response.data;
-      }
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
 
 export const getPostAsync = async (
   { postID, username }: { postID: string; username: string },
@@ -256,9 +261,11 @@ export const followAsync = createAsyncThunk(
     try {
       const response = await axios.post(`${PROFILE}/follow`, {profileID});
       if (response.data.success) {
+        dispatch(showSnackbar("Followed"));
         return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data);
     }
   }
@@ -270,9 +277,11 @@ export const followAsync = createAsyncThunk(
       try {
         const response = await axios.post(`${PROFILE}/unfollow`, {profileID});
         if (response.data.success) {
+          dispatch(showSnackbar("Unfollowed"));
           return response.data;
       }
     } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
       return rejectWithValue(error.response.data)
     }
   }

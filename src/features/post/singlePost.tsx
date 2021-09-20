@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getPostAsync } from "../../utils/server.requests";
-import { PostState, reactPostAsync, UserState } from "./postSlice";
+import { getPostAsync, reactPostAsync } from "../../utils/server.requests";
+import { PostState } from "./types";
 import { format, parseJSON } from "date-fns";
 import { isLiked } from "../../utils/function";
 import UserLayout from "./userLayout";
@@ -13,7 +13,6 @@ import TopBar from "../../components/topBar";
 const SinglePost = () => {
   const { username, postID } = useParams();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const profileID = useAppSelector((state) => state.auth.profile.profile._id);
   const profile = useAppSelector((state) => state.auth.profile);
   const [post, setPost] = useState<PostState | null>(null);
@@ -40,7 +39,7 @@ const SinglePost = () => {
 
   useEffect(() => {
     getPostAsync({ postID, username }, setPost);
-  }, []);
+  }, [postID, username]);
 
   if (post !== null) {
     return (
@@ -53,7 +52,7 @@ const SinglePost = () => {
             username={post.author.username}
           />
           <p className="text-xl mt-4 mb-4">{post.body}</p>
-          <img src={post.img?.src} className="my-3 block mx-auto" />
+          {post.img.src !== "" && <img src={post.img?.src} alt="post" className="my-3 block mx-auto" />}
           <p className="text-gray-600">
             {format(parseJSON(post.createdAt), "PPpp")}
           </p>
@@ -76,7 +75,7 @@ const SinglePost = () => {
                   username={reply.author.username}
                 />
                 <p className="text-xl mt-4 mb-4">{reply.body}</p>
-                <img src={reply.img?.src} className="my-3 block mx-auto" />
+                {post.img.src !== "" && <img src={reply.img.src} alt="post" className="my-3 block mx-auto" />}
               </div>
             )
           })}

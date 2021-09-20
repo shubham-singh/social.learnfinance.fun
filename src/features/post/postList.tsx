@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { isLiked, timeAgo } from "../../utils/function";
 import ActionLayout from "./actionLayout";
-import { PostState, reactPostAsync } from "./postSlice";
 import UserLayout from "./userLayout";
+import { PostState } from "./types";
+import { reactPostAsync } from "../../utils/server.requests";
 
 const PostList = ({ posts }: { posts: PostState[] }) => {
   const profileID = useAppSelector((state) => state.auth.profile.profile._id);
@@ -31,7 +32,7 @@ const PostList = ({ posts }: { posts: PostState[] }) => {
             />
             <Link to={`/${post.author.username}/${post._id}`} className="">
               <p className="text-xl mt-2">{post.body}</p>
-              {post.img !== undefined && <img className="block mx-auto" src={post.img.src} />}
+              {post.img.src !== "" && <img className="block mx-auto" src={post.img.src} alt="post" />}
             </Link>
             <div className="flex flex-row justify-evenly items-center mt-2">
               <ActionLayout

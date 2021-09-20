@@ -1,6 +1,5 @@
 import axios from "axios";
 import { formatDistanceToNow, parseISO } from "date-fns";
-import { PostState } from "../features/post/postSlice";
 
 export const scrollToTop = () => {
   window.scroll({

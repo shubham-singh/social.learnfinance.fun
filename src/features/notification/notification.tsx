@@ -21,6 +21,7 @@ const Notification = () => {
             <img
               className="w-10 h-10 bg-gray-600 rounded-full border-none"
               src={notification.sender.img.profile.src}
+              alt="profile"
             />
           </Link>
           <p className="mx-3">
@@ -40,6 +41,7 @@ const Notification = () => {
             <img
               className="w-10 h-10 bg-gray-600 rounded-full border-none"
               src={notification.sender.img.profile.src}
+              alt="profile"
             />
             <p className="mx-3">
               <span className="font-bold">{notification.sender.name}</span>{" "}
@@ -59,6 +61,7 @@ const Notification = () => {
             <img
               className="w-10 h-10 bg-gray-600 rounded-full border-none"
               src={notification.sender.img.profile.src}
+              alt="profile"
             />
             <p className="mx-3">
               <span className="font-bold">{notification.sender.name}</span>{" "}

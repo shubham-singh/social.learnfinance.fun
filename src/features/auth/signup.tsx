@@ -54,13 +54,11 @@ const Signup = () => {
           className="heading m-null p-s pointer"
           onClick={() => navigate("/")}
         >
-          {/* {lang[language].learnFinance} */}
           Learn Finance
         </h1>
         <input
           className="m-xs p-s"
           type="name"
-        //   placeholder={lang[language].firstName}
           placeholder="First name"
           name="firstName"
           value={signupInfo.firstName}
@@ -70,7 +68,6 @@ const Signup = () => {
         <input
           className="m-xs p-s"
           type="name"
-        //   placeholder={lang[language].lastName}
           placeholder="Last name"
           name="lastName"
           value={signupInfo.lastName}
@@ -79,7 +76,6 @@ const Signup = () => {
         <input
           className="m-xs p-s"
           type="email"
-        //   placeholder={lang[language].email}
           placeholder="Email"
           name="email"
           value={signupInfo.email}
@@ -89,7 +85,6 @@ const Signup = () => {
         <input
           className="m-xs p-s"
           type="password"
-        //   placeholder={lang[language].password}
           placeholder="Password"
           name="password"
           value={signupInfo.password}
@@ -97,12 +92,10 @@ const Signup = () => {
           required
         />
         <button className="btn btn-classic shadow mt-l" type="submit">
-          {/* {lang[language].signup} */}
           Create my account
         </button>
       </form>
       <p className="mt-xl pointer" onClick={() => navigate("/login")}>
-        {/* {lang[language].loginText} */}
         Already have an account? Login now!
       </p>
     </div>

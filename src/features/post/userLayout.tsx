@@ -15,6 +15,7 @@ const UserLayout = ({
         <img
           className="w-12 h-12 bg-gray-600 rounded-full border-none"
           src={image}
+          alt="profile"
         />
       </Link>
       <div className="ml-4">

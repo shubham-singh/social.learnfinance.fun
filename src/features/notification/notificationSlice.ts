@@ -3,7 +3,7 @@ import {
   getNotificationAsync,
   readNotificationAsync,
 } from "../../utils/server.requests";
-import { UserState } from "../post/postSlice";
+import { UserState } from "../post/types";
 
 export interface NotificationState {
   _id: string;

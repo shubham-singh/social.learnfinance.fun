@@ -7,7 +7,7 @@ import { ReactComponent as ReplyIcon } from "../../assets/icons/ReplyIcon.svg";
 import { useNavigate } from "react-router";
 import { ReactComponent as DeleteIcon } from "../../assets/icons/DeleteIcon.svg";
 import { deletePostAsync } from "../../utils/server.requests";
-import { PostState } from "./postSlice";
+import { PostState } from "./types";;
 
 const ActionLayout = ({
   post,

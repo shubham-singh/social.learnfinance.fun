@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { followAsync, getProfileByUsernameAsync, unfollowAsync } from "../../utils/server.requests";
+import { followAsync, getProfileByUsernameAsync, unfollowAsync, getAllPostAsync } from "../../utils/server.requests";
 import PostList from "../post/postList";
-import { getAllPostAsync } from "../post/postSlice";
 import { isFollowing } from "../../utils/function";
 import Loader from "../../components/loader";
 import TopBar from "../../components/topBar";
@@ -48,7 +47,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getProfileByUsernameAsync(username));
     dispatch(getAllPostAsync(username));
-  }, [username]);
+  }, [username, dispatch]);
 
   if (profile.status === "loading") {
     return <Loader />;

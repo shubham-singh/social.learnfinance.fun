@@ -44,7 +44,7 @@ const ProfileSetup = () => {
     if (!newUser) {
       navigate(`/${userProfile.username}`);
     }
-    if (formState.index >= 2) {
+    if (formState.index >= 2 && newUser) {
       let formData = new FormData();
       formData.append("username", profile.username);
       formData.append("name", profile.name);
@@ -57,7 +57,7 @@ const ProfileSetup = () => {
       }
       dispatch(createProfileAsync(formData));
     }
-  }, [formState.index, newUser]);
+  }, [formState.index, newUser, profile, userProfile.username, navigate, dispatch]);
 
   const checkUsername = async () => {
     const available = await checkUsernameAsync(profile.username);
@@ -117,7 +117,7 @@ const ProfileSetup = () => {
     } else if (formState.index === 1) {
       return (
         <div className="h-screen w-5/6 flex flex-col justify-center items-center mx-auto">
-          <label htmlFor="imgCover" className="border-2 p-2 m-2">
+          <label htmlFor="imgCover" className="border-2 p-2 m-2 cursor-pointer">
           Cover picture{profile.imgCover !== null ? " ✔️" : ""}
           </label>
           <input
@@ -126,13 +126,13 @@ const ProfileSetup = () => {
             name="imgCover"
             accept="image/png, image/jpeg"
             onChange={(e) =>
-              setProfile({ ...profile, imgProfile: e.target.files![0] })
+              setProfile({ ...profile, imgCover: e.target.files![0] })
             }
             className="hidden"
           />
           <label
             htmlFor="imgProfile"
-            className="border-2 p-2 m-2"
+            className="border-2 p-2 m-2 cursor-pointer"
           >
             Profile picture {profile.imgProfile !== null ? " ✔️" : ""}
           </label>
@@ -142,7 +142,7 @@ const ProfileSetup = () => {
             name="imgProfile"
             accept="image/png, image/jpeg"
             onChange={(e) =>
-              setProfile({ ...profile, imgCover: e.target.files![0] })
+              setProfile({ ...profile, imgProfile: e.target.files![0] })
             }
             className="hidden"
           />

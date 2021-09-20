@@ -2,7 +2,6 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from "../features/auth/authSlice";
 import snackbarReducer from "../features/snackbar/snackbarSlice";
 import profileReducer from "../features/profile/profileSlice";
-import postReducer from "../features/post/postSlice";
 import feedReducer from "../features/feed/feedSlice";
 import notificationReducer from "../features/notification/notificationSlice";
 
@@ -11,7 +10,6 @@ export const store = configureStore({
     auth: authReducer,
     snackbar: snackbarReducer,
     profile: profileReducer,
-    post: postReducer,
     notification: notificationReducer,
     feed :feedReducer
   },
