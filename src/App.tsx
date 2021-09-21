@@ -29,7 +29,7 @@ import Sidebar from "./components/sidebar";
 function App() {
   const [nav, setNav] = useState<boolean>(false);
   const loggedIn = useAppSelector((state) => state.auth.loggedIn);
-  const { newUser, profile: {username} } = useAppSelector((state) => state.auth.profile);
+  const { newUser } = useAppSelector((state) => state.auth.profile);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,10 +46,12 @@ function App() {
     if (newUser) {
       navigate("/profile/setup");
     } else {
-      dispatch(getFeedAsync());
-      dispatch(getNotificationAsync());
+      if (loggedIn) {
+        dispatch(getFeedAsync());
+        dispatch(getNotificationAsync());
+      }
     }
-  }, [newUser, username, navigate, dispatch]);
+  }, [newUser, loggedIn ,navigate, dispatch]);
 
 
   return (

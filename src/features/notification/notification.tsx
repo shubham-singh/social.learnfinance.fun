@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
+import DisplayProfileImage from "../../components/displayProfileImage";
 import TopBar from "../../components/topBar";
 import { readNotificationAsync } from "../../utils/server.requests";
 import { NotificationState } from "./notificationSlice";
@@ -18,10 +19,9 @@ const Notification = () => {
       return (
         <>
           <Link to={`/${notification.sender.username}`}>
-            <img
-              className="w-10 h-10 bg-gray-600 rounded-full border-none"
-              src={notification.sender.img.profile.src}
-              alt="profile"
+            <DisplayProfileImage
+              img={notification.sender.img.profile.src}
+              className="w-10 h-10 bg-gray-400 rounded-full border-none"
             />
           </Link>
           <p className="mx-3">
@@ -38,11 +38,11 @@ const Notification = () => {
             className="flex items-center"
             to={`/${username}/${notification.onItem}`}
           >
-            <img
-              className="w-10 h-10 bg-gray-600 rounded-full border-none"
-              src={notification.sender.img.profile.src}
-              alt="profile"
+            <DisplayProfileImage
+              img={notification.sender.img.profile.src}
+              className="w-10 h-10 bg-gray-400 rounded-full border-none"
             />
+
             <p className="mx-3">
               <span className="font-bold">{notification.sender.name}</span>{" "}
               liked your post
@@ -58,11 +58,11 @@ const Notification = () => {
             className="flex items-center"
             to={`/${username}/${notification.onItem}`}
           >
-            <img
-              className="w-10 h-10 bg-gray-600 rounded-full border-none"
-              src={notification.sender.img.profile.src}
-              alt="profile"
+            <DisplayProfileImage
+              img={notification.sender.img.profile.src}
+              className="w-10 h-10 bg-gray-400 rounded-full border-none"
             />
+
             <p className="mx-3">
               <span className="font-bold">{notification.sender.name}</span>{" "}
               replied to your post
