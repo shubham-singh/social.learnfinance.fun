@@ -20,7 +20,7 @@ const Snackbar = () => {
   return (
     <>
       {visible && (
-        <div className="fixed z-20 left-1/2 transform -translate-x-1/2 top-3/4 bg-gray-700 px-3 py-1 text-white rounded-full shadow-xl">
+        <div className="fixed w-auto z-20 left-1/2 transform -translate-x-1/2 top-3/4 bg-gray-700 px-3 py-1 text-white rounded-full shadow-xl">
           <p>{message}</p>
         </div>
       )}

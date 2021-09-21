@@ -25,7 +25,7 @@ export const loginAsync = createAsyncThunk(
       dispatch(showSnackbar("Logging in"));
       const response = await axios.post(LOGIN, loginInfo);
       if (response.data.success) {
-        dispatch(showSnackbar("Successfully Logged In"));
+        dispatch(showSnackbar("Logged In"));
         return response.data;
       } else throw new Error("login failed");
     } catch (error: any) {

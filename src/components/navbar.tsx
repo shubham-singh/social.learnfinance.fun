@@ -4,6 +4,7 @@ import Acquaintance from "../components/acquaintance";
 import { Link, NavLink } from "react-router-dom";
 import { logout } from "../features/auth/authSlice";
 import { ReactComponent as BackIcon } from "../assets/icons/BackIcon.svg";
+import { showSnackbar } from "../features/snackbar/snackbarSlice";
 const Navbar = ({
   nav,
   setNav,
@@ -70,6 +71,7 @@ const Navbar = ({
         <button
           onClick={() => {
             dispatch(logout());
+            dispatch(showSnackbar("Logged out"))
           }}
         >
           Log out
