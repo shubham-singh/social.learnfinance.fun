@@ -78,7 +78,7 @@ const Navbar = ({
         </button>
       </Link>
       <button
-        className="flex-grow flex flex-col justify-end md:hidden"
+        className="flex-grow flex flex-col justify-center md:hidden"
       >
         <BackIcon />
       </button>
