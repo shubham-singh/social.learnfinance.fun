@@ -10,11 +10,10 @@ interface LoginState {
 }
 
 interface State {
-  from: string
+  from: string;
 }
 
 const Login = () => {
-  
   const { loggedIn } = useAppSelector((state) => state.auth);
   const { state } = useLocation() as { state: State };
   const navigate = useNavigate();
@@ -37,10 +36,12 @@ const Login = () => {
   };
 
   const handleGuestLogin = () => {
-    dispatch(loginAsync({
-      email: "shubham@gmail.com",
-      password: "Bitcoin",
-    }));
+    dispatch(
+      loginAsync({
+        email: "shubham@gmail.com",
+        password: "Bitcoin",
+      })
+    );
     setLoginInfo({
       email: "shubham@gmail.com",
       password: "Bitcoin",
@@ -62,56 +63,11 @@ const Login = () => {
   });
 
   return (
-    // <div className="flex flex-col justify-center">
-    //   <form className="" onSubmit={handleLogin}>
-    //     <h1
-    //       className=""
-    //       onClick={() => navigate("/")}
-    //     >
-    //       {/* {lang[language].learnFinance} */}
-    //       Learn Finance
-    //     </h1>
-    //     <input
-    //       className=""
-    //       type="email"
-    //       //   placeholder={lang[language].email}
-    //       placeholder="Email"
-    //       name="email"
-    //       value={loginInfo.email}
-    //       onChange={onChangeHandler}
-    //       required
-    //     />
-    //     <input
-    //       className=""
-    //       type="password"
-    //       //   placeholder={lang[language].password}
-    //       placeholder="Password"
-    //       name="password"
-    //       value={loginInfo.password}
-    //       onChange={onChangeHandler}
-    //       required
-    //     />
-    //     <button className="" type="submit">
-    //       {/* {lang[language].login} */}
-    //       Login
-    //     </button>
-    //     <button
-    //       className=""
-    //       onClick={handleGuestLogin}
-    //     >
-    //       {/* {lang[language].loginAsGuest} */}
-    //       Login with Guest account
-    //     </button>
-    //   </form>
-    //   <p className="" onClick={() => navigate("/signup")}>
-    //     {/* {lang[language].signupText} */}
-    //     Don't have an account? Signup now!
-    //   </p>
-    // </div>
-
-
     <div className="flex-column-center form-container">
-      <form className="flex-c form-credentials shadow" onSubmit={handleLogin}>
+      <form
+        className="flex-c form-credentials shadow-2xl w-full sm:w-4/5 md:w-auto"
+        onSubmit={handleLogin}
+      >
         <h1
           className="heading m-null p-s pointer"
           onClick={() => navigate("/")}
