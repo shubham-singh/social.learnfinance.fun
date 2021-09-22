@@ -61,7 +61,7 @@ function App() {
       
       {["/login", "/signup", "/", "/profile/setup"].includes(location.pathname) ? null : <Navbar nav={nav} setNav={setNav} />}
 
-      <div className="flex-grow md:w-1/2">
+      <div className="flex-grow h-full md:w-1/2">
         <Routes>
           <Route path="/" element={<Login />} />
           <PrivateRoute path="/home" element={<Home nav={nav} setNav={setNav} />} />

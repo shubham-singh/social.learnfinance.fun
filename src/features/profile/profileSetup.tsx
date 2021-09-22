@@ -77,7 +77,7 @@ const ProfileSetup = () => {
   const loadForm = () => {
     if (formState.index === 0) {
       return (
-        <div className="h-screen flex flex-col justify-center items-center">
+        <div className="flex-grow flex flex-col justify-center items-center">
           <input
             style={{
               border: `2px solid ${formState.status ? "green" : "red"}`,
@@ -116,7 +116,7 @@ const ProfileSetup = () => {
       );
     } else if (formState.index === 1) {
       return (
-        <div className="h-screen w-5/6 flex flex-col justify-center items-center mx-auto">
+        <div className="flex-grow w-5/6 flex flex-col justify-center items-center mx-auto">
           <label htmlFor="imgCover" className="border-2 p-2 m-2 cursor-pointer">
           Cover picture{profile.imgCover !== null ? " ✔️" : ""}
           </label>
@@ -168,8 +168,8 @@ const ProfileSetup = () => {
 
   if (newUser) {
   return (
-    <div className="h-screen flex flex-col justify-center">
-      <TopBar title="Profile Setup" />
+    <div className="h-full flex flex-col justify-center">
+      <TopBar title="Profile Setup" canGoBack={false} />
       {loadForm()}
       <button
         className="bg-green-500 py-3 px-6 block font-bold disabled:opacity-50"

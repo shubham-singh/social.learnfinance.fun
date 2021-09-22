@@ -17,24 +17,31 @@ const Navbar = ({
     (state) => state.auth.profile.profile
   );
   const loggedIn = useAppSelector((state) => state.auth.loggedIn);
-  
+
   if (!loggedIn) {
     return (
       <div
-        className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-screen w-4/5 sm:w-3/5 md:shadow-none md:flex md:sticky md:top-0 md:w-1/4 md:pl-20 md:translate-x-0 ${
+        className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-full w-4/5 sm:w-3/5 md:shadow-none md:flex md:sticky md:top-0 md:w-1/4 md:pl-20 md:translate-x-0 ${
           nav ? "shadow-2xl translate-x-0" : "-translate-x-full shadow-none"
         }`}
       >
         <h1 className="heading mb-5">Learn Finance</h1>
-        <Link to="/login" className="my-2 text-xl">Login</Link>
-        <Link to="/signup" className="my-2 text-xl">Signup</Link>
+        <Link to="/login" className="my-2 text-xl">
+          Login
+        </Link>
+        <Link to="/signup" className="my-2 text-xl">
+          Signup
+        </Link>
+        <button className="flex-grow flex flex-col justify-end md:hidden">
+          <BackIcon />
+        </button>
       </div>
     );
   }
 
   return (
     <div
-      className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-screen w-4/5 sm:w-3/5 md:shadow-none md:flex md:sticky md:top-0 md:w-1/4 md:pl-20 md:translate-x-0 ${
+      className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-full w-4/5 sm:w-3/5 md:shadow-none md:flex md:sticky md:top-0 md:w-1/4 md:pl-20 md:translate-x-0 ${
         nav ? "shadow-2xl translate-x-0" : "-translate-x-full shadow-none"
       }`}
       onClick={() => setNav(false)}
@@ -71,15 +78,13 @@ const Navbar = ({
         <button
           onClick={() => {
             dispatch(logout());
-            dispatch(showSnackbar("Logged out"))
+            dispatch(showSnackbar("Logged out"));
           }}
         >
           Log out
         </button>
       </Link>
-      <button
-        className="flex-grow flex flex-col justify-center md:hidden"
-      >
+      <button className="flex-grow flex flex-col justify-end md:hidden">
         <BackIcon />
       </button>
     </div>
