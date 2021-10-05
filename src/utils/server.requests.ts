@@ -242,12 +242,15 @@ export const deletePostAsync = createAsyncThunk(
 
 export const getPostAsync = async (
   { postID, username }: { postID: string; username: string },
-  setPost: React.Dispatch<React.SetStateAction<PostState | null>>
+  setPost: React.Dispatch<React.SetStateAction<PostState | null | 'DELETED'>>
 ) => {
   try {
     const response = await axios.get(`${POST}/${username}/${postID}`);
     if (response.data.success) {
       setPost(response.data.post);
+    }
+    if (!response.data.success && response.data.error === 'post deleted') {
+      setPost('DELETED');
     }
   } catch (error: any) {
     setPost(error.message);

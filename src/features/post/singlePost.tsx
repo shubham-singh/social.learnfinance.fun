@@ -15,13 +15,13 @@ const SinglePost = () => {
   const dispatch = useAppDispatch();
   const profileID = useAppSelector((state) => state.auth.profile.profile._id);
   const profile = useAppSelector((state) => state.auth.profile);
-  const [post, setPost] = useState<PostState | null>(null);
+  const [post, setPost] = useState<PostState | null | 'DELETED'>(null);
 
   const isPostLiked =
-    post !== null ? isLiked(post.likes, profileID, true) : false;
+    (post !== null && post !== 'DELETED') ? isLiked(post.likes, profileID, true) : false;
 
   const likeUnlike = () => {
-    if (post !== null) {
+    if (post !== null && post!== 'DELETED') {
       dispatch(reactPostAsync(post._id));
       if (isPostLiked) {
         setPost({
@@ -41,7 +41,7 @@ const SinglePost = () => {
     getPostAsync({ postID, username }, setPost);
   }, [postID, username]);
 
-  if (post !== null) {
+  if (post !== null && post !== 'DELETED') {
     return (
       <div className="flex flex-col">
         <TopBar title="Post" />
@@ -83,8 +83,11 @@ const SinglePost = () => {
         </div>
       </div>
     );
+  } else if (post === 'DELETED') {
+    return <div className="text-center p-5 font-bold">This post no longer exists</div>
+  } else {
+    return <Loader />;
   }
-  return <Loader />;
 };
 
 export default SinglePost;
