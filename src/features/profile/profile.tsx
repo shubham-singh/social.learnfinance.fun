@@ -45,8 +45,8 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    dispatch(getProfileByUsernameAsync(username));
     dispatch(getAllPostAsync(username));
+    dispatch(getProfileByUsernameAsync(username));
   }, [username, dispatch]);
 
   if (profile.status === "loading") {

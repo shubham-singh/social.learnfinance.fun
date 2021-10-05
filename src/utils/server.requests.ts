@@ -77,6 +77,7 @@ export const getProfileByUsernameAsync = createAsyncThunk(
       const response = await axios.get(`${PROFILE}/${username}`);
       if (response.data.success) {
         if (response.data.profile === null) {
+          dispatch(showSnackbar("User does not exist"));
           throw new Error(username);
         }
         return response.data;

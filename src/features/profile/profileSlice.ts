@@ -69,8 +69,12 @@ export const profileSlice = createSlice({
         state.userExists = false;
         state.profile.username = action.meta.arg;
         state.profile.name = action.meta.arg;
+        state.profile._id = "";
         state.profile.img.profile.src = "";
         state.profile.img.cover.src = "";
+        state.profile.followers = [];
+        state.profile.following = [];
+        state.profile.bio = "";
       })
       .addCase(getAllPostAsync.pending, (state) => {
         state.status = "loading";
