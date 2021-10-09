@@ -21,7 +21,7 @@ const Navbar = ({
   if (!loggedIn) {
     return (
       <div
-        className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-full w-4/5 sm:w-3/5 md:shadow-none md:flex md:sticky md:top-0 md:w-1/4 md:pl-20 md:translate-x-0 ${
+        className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-full w-4/5 sm:w-3/5 md:w-1/4 md:shadow-none md:sticky md:top-0 md:pl-20 md:translate-x-0 ${
           nav ? "shadow-2xl translate-x-0" : "-translate-x-full shadow-none"
         }`}
       >
@@ -41,7 +41,7 @@ const Navbar = ({
 
   return (
     <div
-      className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-full w-4/5 sm:w-3/5 md:shadow-none md:flex md:sticky md:top-0 md:w-1/4 md:pl-20 md:translate-x-0 ${
+      className={`bg-white transform duration-300 z-20 fixed px-6 py-10 flex flex-col h-full w-4/5 sm:w-3/5 md:w-1/4 md:shadow-none md:sticky md:top-0 md:pl-20 md:translate-x-0 ${
         nav ? "shadow-2xl translate-x-0" : "-translate-x-full shadow-none"
       }`}
       onClick={() => setNav(false)}

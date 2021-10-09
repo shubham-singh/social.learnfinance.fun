@@ -55,7 +55,7 @@ function App() {
 
 
   return (
-    <div className="App md:flex md:relative">
+    <div className="App md:flex md:items-start md:relative">
     
       <Snackbar />
       
@@ -76,7 +76,7 @@ function App() {
         </Routes>
       </div>
 
-      {["/login", "/signup", "/", "/profile/setup"].includes(location.pathname) ? null : <Sidebar />}
+        {["/login", "/signup", "/", "/profile/setup"].includes(location.pathname) ? null : <Sidebar />}
 
     </div>
   );
