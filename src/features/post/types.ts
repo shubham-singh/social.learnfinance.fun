@@ -10,6 +10,7 @@ export interface UserState {
   }
   
   export interface ReplyState {
+    _id: string;
     author: UserState;
     body: string;
     img: {

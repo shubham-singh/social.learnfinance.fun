@@ -12,12 +12,16 @@ interface newPostState {
 }
 
 const ComposePost = ({isReply=false} : {isReply?: boolean}) => {
-  const [post, setPost] = useState({} as newPostState);
+  const [post, setPost] = useState<newPostState>({
+    body: "",
+    image: null
+  });
   const image = useAppSelector((state) => state.auth.profile.profile.img.profile.src);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { postID, username } = useParams();
-  
+  const isPostEmpty = post.body.trim() === "" && (post.image === null || post.image === undefined);
+
   const handleCLick = () => {
     let postForm = new FormData();
     postForm.append("body", post.body);
@@ -44,8 +48,9 @@ const ComposePost = ({isReply=false} : {isReply?: boolean}) => {
       <div className="flex justify-between items-center py-2">
         <BackIcon className="cursor-pointer md:hidden" onClick={() => navigate("/home")} />
         <button
-          className="inline-block px-6 py-2 rounded-xl text-white bg-gray-600 cursor-pointer"
+          className={`inline-block px-6 py-2 rounded-xl text-white bg-gray-600 cursor-pointer ${isPostEmpty ? "disabled:opacity-50" : ""}`}
           onClick={handleCLick}
+          disabled={isPostEmpty}
         >
           {isReply ? "Reply" : "Post"}
         </button>
@@ -57,7 +62,7 @@ const ComposePost = ({isReply=false} : {isReply?: boolean}) => {
             src={image}
             alt="profile"
             />
-            <label htmlFor="image" className="mt-6"><ImageIcon /></label>
+            <label htmlFor="image" className="mt-6"><ImageIcon className={`${post.image ? "border-2 border-green-400" : ""}`} /></label>
           <input type="file" id="image" name="image" className="hidden" onChange={(e) => setPost({...post, image: e.target.files![0]})} />
         </div>
         <textarea
