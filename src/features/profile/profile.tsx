@@ -64,6 +64,7 @@ const Profile = () => {
       />
       <div className="border-t">
         {profile.userExists && <PostList posts={profile.posts} />}
+        {(profile.userExists && profile.posts.length === 0) && <ShowMessage text="No posts yet" />}
         {!profile.userExists && (
           <ShowMessage text="This account doesn’t exist" />
         )}
