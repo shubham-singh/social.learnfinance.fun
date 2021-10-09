@@ -68,14 +68,14 @@ const SinglePost = () => {
         <div className="mx-3">
           {post.replies.map(reply => {
             return (
-              <div className="py-2 border-b">
+              <div key={reply._id} className="py-2 border-b">
                 <UserLayout
                   image={reply.author.img.profile.src}
                   name={reply.author.name}
                   username={reply.author.username}
                 />
                 <p className="text-xl mt-4 mb-4">{reply.body}</p>
-                {post.img.src !== "" && <img src={reply.img.src} alt="post" className="my-3 block mx-auto" />}
+                {reply.img.src !== "" && <img src={reply.img.src} alt="post" className="my-3 block mx-auto" />}
               </div>
             )
           })}
