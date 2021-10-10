@@ -1,4 +1,3 @@
-// const domain = "https://sociallearnfinancefun-backend.ishubhamsingh.repl.co";
 const domain = "https://social-learnfinance-fun.herokuapp.com";
 
 export const LOGIN = `${domain}/user/login/`;

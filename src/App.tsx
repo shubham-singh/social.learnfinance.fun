@@ -25,6 +25,7 @@ import Profile from "./features/profile/profile";
 import Notification from "./features/notification/notification";
 import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar";
+import EditProfile from "./features/profile/editProfile";
 
 function App() {
   const [nav, setNav] = useState<boolean>(false);
@@ -68,6 +69,7 @@ function App() {
           <PrivateRoute path="/compose" element={<ComposePost />} />
           <PrivateRoute path="/reply/:username/:postID" element={<ComposePost isReply={true} />} />
           <PrivateRoute path="/profile/setup" element={<ProfileSetup />} />
+          <PrivateRoute path="/profile/edit" element={<EditProfile />} />
           <PrivateRoute path="/notifications" element={<Notification />} />
           <Route path="/:username" element={<Profile />} />
           <Route path="/:username/:postID" element={<SinglePost />} />

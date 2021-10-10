@@ -192,6 +192,24 @@ export const createProfileAsync = createAsyncThunk(
   }
 );
 
+export const editProfileAsync = createAsyncThunk(
+  "profile/editProfile",
+  async ({formData, navigate} :{formData: FormData, navigate: NavigateFunction}, { dispatch, rejectWithValue }) => {
+    try {
+      dispatch(showSnackbar("Updating profile"));
+      const response = await axios.post(`${PROFILE}/edit`, formData)
+      if (response.data.success) {
+        dispatch(showSnackbar("Successfully updated profile"));
+        navigate(-1);
+        return response.data;
+      }
+    } catch (error: any) {
+      dispatch(showSnackbar(error.response.data.error));
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
+
 export const createPostAsync = createAsyncThunk(
   "post/create",
   async (postForm: FormData, { dispatch, rejectWithValue }) => {

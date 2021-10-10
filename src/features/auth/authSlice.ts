@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createProfileAsync,
+  editProfileAsync,
   followAsync,
   getProfileAsync,
   loginAsync,
@@ -98,6 +99,9 @@ export const authSlice = createSlice({
       })
       .addCase(createProfileAsync.fulfilled, (state, action) => {
         state.profile.newUser = false;
+        state.profile.profile = action.payload.profile;
+      })
+      .addCase(editProfileAsync.fulfilled, (state, action) => {
         state.profile.profile = action.payload.profile;
       })
       .addCase(getProfileAsync.fulfilled, (state, action) => {

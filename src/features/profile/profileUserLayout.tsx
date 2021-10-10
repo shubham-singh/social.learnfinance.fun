@@ -40,7 +40,7 @@ const ProfileUserLayout = ({
             className="self-end my-2 bg-black text-white px-6 py-2 border-none rounded-full"
             onClick={() =>
               isUserProfileSameAsProfile
-                ? navigate("/profile/setup")
+                ? navigate("/profile/edit")
                 : profile.userExists
                 ? followUnfollow()
                 : dispatch(showSnackbar("User does not exist"))
