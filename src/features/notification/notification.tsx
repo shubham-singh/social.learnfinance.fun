@@ -18,16 +18,16 @@ const Notification = () => {
     if (notification.type === "FOLLOWED") {
       return (
         <>
-          <Link to={`/${notification.sender.username}`}>
+          <Link className="flex items-center" to={`/${notification.sender.username}`}>
             <DisplayProfileImage
               img={notification.sender.img.profile.src}
               className="w-10 h-10 bg-gray-400 rounded-full border-none"
             />
+            <p className="mx-3">
+              <span className="font-bold">{notification.sender.name}</span>{" "}
+              Followed you
+            </p>
           </Link>
-          <p className="mx-3">
-            <span className="font-bold">{notification.sender.name}</span>{" "}
-            Followed you
-          </p>
         </>
       );
     }
