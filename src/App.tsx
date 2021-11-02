@@ -17,6 +17,7 @@ import {
   getFeedAsync,
   getNotificationAsync,
   getProfileAsync,
+  pingServer,
 } from "./utils/server.requests";
 import Signup from "./features/auth/signup";
 import Snackbar from "./features/snackbar/snackbar";
@@ -34,6 +35,10 @@ function App() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    pingServer();
+  }, [])
 
   useEffect(() => {
     setupAuthHeaderForServiceCalls();

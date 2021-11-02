@@ -2,6 +2,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { showSnackbar } from "../features/snackbar/snackbarSlice";
 import {
+  BASE,
   CHECK_USERNAME,
   FEED,
   LOGIN,
@@ -14,6 +15,10 @@ import {
 import { PostState } from "../features/post/types";
 import { deleteAuthToken } from "./function";
 import { NavigateFunction } from "react-router-dom";
+
+export const pingServer = async () => {
+  await axios.get(BASE);
+}
 
 export const loginAsync = createAsyncThunk(
   "auth/login",
