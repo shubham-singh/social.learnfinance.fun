@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import Login from "./features/auth/login";
@@ -38,7 +33,7 @@ function App() {
 
   useEffect(() => {
     pingServer();
-  }, [])
+  }, []);
 
   useEffect(() => {
     setupAuthHeaderForServiceCalls();
@@ -46,7 +41,6 @@ function App() {
       dispatch(getProfileAsync(navigate));
     }
   }, [loggedIn, dispatch, navigate]);
-
 
   useEffect(() => {
     if (newUser) {
@@ -57,22 +51,30 @@ function App() {
         dispatch(getNotificationAsync());
       }
     }
-  }, [newUser, loggedIn ,navigate, dispatch]);
-
+  }, [newUser, loggedIn, navigate, dispatch]);
 
   return (
     <div className="App md:flex md:items-start md:relative">
-    
       <Snackbar />
-      
-      {["/login", "/signup", "/", "/profile/setup"].includes(location.pathname) ? null : <Navbar nav={nav} setNav={setNav} />}
+
+      {["/login", "/signup", "/", "/profile/setup"].includes(
+        location.pathname
+      ) ? null : (
+        <Navbar nav={nav} setNav={setNav} />
+      )}
 
       <div className="flex-grow h-full md:w-1/2">
         <Routes>
           <Route path="/" element={<Login />} />
-          <PrivateRoute path="/home" element={<Home nav={nav} setNav={setNav} />} />
+          <PrivateRoute
+            path="/home"
+            element={<Home nav={nav} setNav={setNav} />}
+          />
           <PrivateRoute path="/compose" element={<ComposePost />} />
-          <PrivateRoute path="/reply/:username/:postID" element={<ComposePost isReply={true} />} />
+          <PrivateRoute
+            path="/reply/:username/:postID"
+            element={<ComposePost isReply={true} />}
+          />
           <PrivateRoute path="/profile/setup" element={<ProfileSetup />} />
           <PrivateRoute path="/profile/edit" element={<EditProfile />} />
           <PrivateRoute path="/notifications" element={<Notification />} />
@@ -83,8 +85,11 @@ function App() {
         </Routes>
       </div>
 
-        {["/login", "/signup", "/", "/profile/setup"].includes(location.pathname) ? null : <Sidebar />}
-
+      {["/login", "/signup", "/", "/profile/setup"].includes(
+        location.pathname
+      ) ? null : (
+        <Sidebar />
+      )}
     </div>
   );
 }
